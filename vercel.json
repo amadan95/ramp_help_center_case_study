@@ -1,8 +1,5 @@
 {
-  "framework": "nextjs",
-  "buildCommand": "next build",
-  "outputDirectory": ".next",
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+  "builds": [
+    { "src": "help-center-app/next.config.js", "use": "@vercel/next@latest" }
   ]
 }
