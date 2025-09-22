@@ -1,9 +1,8 @@
 {
-  "framework": null,
-  "buildCommand": false,
-  "outputDirectory": "prototype",
+  "framework": "nextjs",
+  "buildCommand": "next build",
+  "outputDirectory": ".next",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
-
