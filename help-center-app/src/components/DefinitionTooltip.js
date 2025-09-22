@@ -1,67 +1,44 @@
-import { useCallback, useState } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
-import { FONT_FAMILY, rampPalette } from '../theme';
+import React, { useState, useRef } from 'react';
+import styles from './DefinitionTooltip.module.css';
 
-export function DefinitionTooltip({ label, description, children, width = 240, style }) {
-  if (!description) {
-    return style ? <View style={style}>{children}</View> : children;
-  }
+export function DefinitionTooltip({ children, label, description, style }) {
+  const [isVisible, setIsVisible] = useState(false);
+  const tooltipRef = useRef(null);
 
-  const [visible, setVisible] = useState(false);
-  const isWeb = Platform.OS === 'web';
+  const handleMouseEnter = () => {
+    setIsVisible(true);
+  };
 
-  const show = useCallback(() => {
-    if (isWeb) setVisible(true);
-  }, [isWeb]);
+  const handleMouseLeave = () => {
+    setIsVisible(false);
+  };
 
-  const hide = useCallback(() => {
-    if (isWeb) setVisible(false);
-  }, [isWeb]);
+  const handleFocus = () => {
+    setIsVisible(true);
+  };
 
-  const hoverHandlers = isWeb ? { onMouseEnter: show, onMouseLeave: hide, onFocus: show, onBlur: hide } : {};
+  const handleBlur = () => {
+    setIsVisible(false);
+  };
 
   return (
-    <View style={[styles.anchor, style]} {...hoverHandlers}>
+    <div 
+      className={styles.tooltipContainer}
+      style={style}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
+      ref={tooltipRef}
+    >
       {children}
-      {visible ? (
-        <View style={[styles.tooltip, { width, transform: [{ translateX: -(width / 2) }] }]} pointerEvents="none">
-          {label ? <Text style={[styles.tooltipText, styles.tooltipLabel]}>{label}</Text> : null}
-          <Text style={styles.tooltipText}>{description}</Text>
-        </View>
-      ) : null}
-    </View>
+      {isVisible && (
+        <div className={styles.tooltip}>
+          <div className={styles.tooltipArrow} />
+          <div className={styles.tooltipTitle}>{label}</div>
+          <div className={styles.tooltipDescription}>{description}</div>
+        </div>
+      )}
+    </div>
   );
 }
-
-const styles = StyleSheet.create({
-  anchor: {
-    position: 'relative',
-    display: 'flex'
-  },
-  tooltip: {
-    position: 'absolute',
-    bottom: '100%',
-    left: '50%',
-    marginBottom: 10,
-    backgroundColor: rampPalette.accentPrimary,
-    borderRadius: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 14,
-    shadowColor: 'rgba(20, 24, 45, 0.35)',
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.3,
-    shadowRadius: 18,
-    elevation: 12,
-    zIndex: 20
-  },
-  tooltipText: {
-    color: 'white',
-    fontSize: 12,
-    lineHeight: 16,
-    fontFamily: FONT_FAMILY
-  },
-  tooltipLabel: {
-    fontWeight: '700',
-    marginBottom: 4
-  }
-});

@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ramp Knowledge Graph Prototype</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f7f9;
+      --surface: #ffffff;
+      --surface-strong: #0e1116;
+      --text: #1c2430;
+      --text-light: #5e6a7c;
+      --accent: #1d72ff;
+      --accent-soft: rgba(29, 114, 255, 0.12);
+      --pill: #020b1a;
+      --border: #d8dee9;
+      --success: #1a7f37;
+      --warning: #c27d00;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 24px 56px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin: 0;
+      letter-spacing: -0.02em;
+    }
+
+    header p {
+      margin: 4px 0 0;
+      color: var(--text-light);
+      max-width: 720px;
+      line-height: 1.4;
+    }
+
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .view-switch {
+      display: flex;
+      gap: 12px;
+    }
+
+    .view-switch button {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .view-switch button.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+      box-shadow: 0 10px 22px rgba(29, 114, 255, 0.18);
+    }
+
+    main {
+      padding: 28px 56px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    section {
+      background: var(--surface);
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      padding: 28px 32px;
+      box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
+    }
+
+    section h2 {
+      font-size: 20px;
+      margin: 0 0 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    section h2 small {
+      font-size: 13px;
+      color: var(--text-light);
+      font-weight: 500;
+      letter-spacing: 0.01em;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .filters {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+
+    .filter-group {
+      flex: 1 1 240px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .filter-group h3 {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--text-light);
+    }
+
+    .filter-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      font-size: 14px;
+      font-weight: 500;
+      background: #f0f3ff;
+      color: #3152b8;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .chip.active {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    .chip[data-variant="tier"] {
+      background: #f7f2ff;
+      color: #6842c2;
+    }
+
+    .chip[data-variant="integration"] {
+      background: #e4f9f0;
+      color: #1c7c5e;
+    }
+
+    .chip[data-variant="persona"].active {
+      box-shadow: 0 8px 16px rgba(49, 82, 184, 0.18);
+    }
+
+    .chip[data-variant="tier"].active {
+      box-shadow: 0 8px 16px rgba(104, 66, 194, 0.18);
+    }
+
+    .chip[data-variant="integration"].active {
+      box-shadow: 0 8px 16px rgba(28, 124, 94, 0.18);
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+      margin-top: 16px;
+    }
+
+    .metric-card {
+      background: var(--surface);
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .metric-card span {
+      font-size: 12px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      font-weight: 600;
+    }
+
+    .metric-card strong {
+      font-size: 20px;
+      letter-spacing: -0.01em;
+    }
+
+    .articles-grid {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .article-card {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      background: linear-gradient(180deg, rgba(246, 247, 249, 0.6), rgba(255, 255, 255, 0.95));
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .article-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 24px rgba(14, 17, 22, 0.08);
+    }
+
+    .article-card h3 {
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.35;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .badge {
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      background: #eef1f8;
+      color: #3b4351;
+    }
+
+    .badge.positive {
+      background: rgba(26, 127, 55, 0.1);
+      color: var(--success);
+    }
+
+    .badge.warning {
+      background: rgba(194, 125, 0, 0.1);
+      color: var(--warning);
+    }
+
+    .article-card p {
+      margin: 0;
+      color: var(--text-light);
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .article-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--text-light);
+    }
+
+    .article-footer span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .article-footer svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .empty-state {
+      border: 1px dashed var(--border);
+      border-radius: 14px;
+      padding: 32px;
+      text-align: center;
+      color: var(--text-light);
+      font-weight: 500;
+    }
+
+    .ai-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 14px;
+    }
+
+    .ai-table thead {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-light);
+    }
+
+    .ai-table th,
+    .ai-table td {
+      padding: 14px 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      text-align: left;
+    }
+
+    .ai-table tbody tr:hover {
+      background: rgba(29, 114, 255, 0.04);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .status-dot.good {
+      background: var(--success);
+    }
+
+    .status-dot.alert {
+      background: var(--warning);
+    }
+
+    .kanban {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .kanban-column {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      background: #fafbff;
+    }
+
+    .kanban-column h4 {
+      margin: 0 0 14px;
+      font-size: 14px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--text-light);
+    }
+
+    .kanban-card {
+      background: white;
+      border-radius: 12px;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .kanban-card strong {
+      font-size: 14px;
+    }
+
+    .two-column {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .list-item {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .list-item span {
+      font-size: 12px;
+      color: var(--text-light);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 720px) {
+      header {
+        padding: 20px 24px 18px;
+      }
+      main {
+        padding: 20px 24px 64px;
+      }
+      section {
+        padding: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-top">
+      <div>
+        <h1>Ramp Knowledge Graph Prototype</h1>
+        <p>Role- and tier-aware knowledge delivery for humans and AI. Toggle the personas to see how article recommendations, AI chunks, and operator queues adapt when metadata drives the experience.</p>
+      </div>
+      <div class="view-switch" role="tablist" aria-label="View switch">
+        <button class="active" data-view="human" role="tab" aria-selected="true">Human experience</button>
+        <button data-view="ai" role="tab" aria-selected="false">AI retrieval</button>
+        <button data-view="ops" role="tab" aria-selected="false">Operator console</button>
+      </div>
+    </div>
+    <div class="metrics-grid" id="globalMetrics">
+      <div class="metric-card">
+        <span>Total views (30d)</span>
+        <strong id="metricViews">–</strong>
+      </div>
+      <div class="metric-card">
+        <span>Low-sentiment articles</span>
+        <strong id="metricSentiment">–</strong>
+      </div>
+      <div class="metric-card">
+        <span>Metadata coverage</span>
+        <strong>100% of sample set</strong>
+      </div>
+      <div class="metric-card">
+        <span>AI-ready chunks</span>
+        <strong id="metricChunks">–</strong>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="personaFilters">
+      <h2>
+        Audience controls
+        <small>Adjust persona, tier, or integration to personalise articles and AI chunks.</small>
+      </h2>
+      <div class="filters">
+        <div class="filter-group">
+          <h3>Persona</h3>
+          <div class="filter-options" id="personaOptions"></div>
+        </div>
+        <div class="filter-group">
+          <h3>Service tier</h3>
+          <div class="filter-options" id="tierOptions"></div>
+        </div>
+        <div class="filter-group">
+          <h3>Key integrations</h3>
+          <div class="filter-options" id="integrationOptions"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="humanView" aria-labelledby="human view">
+      <h2>
+        Personalised Help Center
+        <span class="pill">Authenticated</span>
+        <small>Prioritised by persona, tier, and intent. Badges expose why content is relevant.</small>
+      </h2>
+      <div class="articles-grid" id="articleGrid"></div>
+      <div class="empty-state hidden" id="noArticles">No exact matches yet. Expand filters or fall back to universal FAQs.</div>
+    </section>
+
+    <section id="aiView" class="hidden">
+      <h2>
+        RAG preview
+        <span class="pill">AI</span>
+        <small>Hybrid ranking across metadata-aware chunks with confidence and policy flags.</small>
+      </h2>
+      <table class="ai-table" aria-label="AI retrieval chunks">
+        <thead>
+          <tr>
+            <th>Chunk</th>
+            <th>Persona / Tier</th>
+            <th>Summary</th>
+            <th>Confidence</th>
+            <th>AI-ready?</th>
+          </tr>
+        </thead>
+        <tbody id="aiTableBody"></tbody>
+      </table>
+    </section>
+
+    <section id="opsView" class="hidden">
+      <h2>
+        Operator console
+        <span class="pill">Product Ops</span>
+        <small>Data-driven queue helps teams prioritise updates and track freshness.</small>
+      </h2>
+      <div class="two-column">
+        <div>
+          <h3>Alert queue</h3>
+          <div class="list" id="alertList"></div>
+        </div>
+        <div>
+          <h3>Freshness tracker</h3>
+          <div class="list" id="freshnessList"></div>
+        </div>
+      </div>
+      <h3 style="margin-top:28px;">Workflow snapshot</h3>
+      <div class="kanban" id="kanban"></div>
+    </section>
+  </main>
+
+  <script>
+    const state = {
+      persona: new Set(['employee']),
+      tier: new Set(['base']),
+      integrations: new Set(),
+      view: 'human',
+      articles: [],
+      chunks: []
+    };
+
+    const elements = {
+      personaOptions: document.getElementById('personaOptions'),
+      tierOptions: document.getElementById('tierOptions'),
+      integrationOptions: document.getElementById('integrationOptions'),
+      articleGrid: document.getElementById('articleGrid'),
+      noArticles: document.getElementById('noArticles'),
+      aiTableBody: document.getElementById('aiTableBody'),
+      alertList: document.getElementById('alertList'),
+      freshnessList: document.getElementById('freshnessList'),
+      kanban: document.getElementById('kanban'),
+      metricViews: document.getElementById('metricViews'),
+      metricSentiment: document.getElementById('metricSentiment'),
+      metricChunks: document.getElementById('metricChunks')
+    };
+
+    const viewButtons = document.querySelectorAll('.view-switch button');
+    viewButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        if (button.dataset.view === state.view) return;
+        viewButtons.forEach(b => {
+          b.classList.toggle('active', b === button);
+          b.setAttribute('aria-selected', b === button ? 'true' : 'false');
+        });
+        state.view = button.dataset.view;
+        document.getElementById('humanView').classList.toggle('hidden', state.view !== 'human');
+        document.getElementById('aiView').classList.toggle('hidden', state.view !== 'ai');
+        document.getElementById('opsView').classList.toggle('hidden', state.view !== 'ops');
+      });
+    });
+
+    function createChip(label, variant, value, active = false) {
+      const chip = document.createElement('button');
+      chip.className = 'chip' + (active ? ' active' : '');
+      chip.dataset.variant = variant;
+      chip.dataset.value = value;
+      chip.type = 'button';
+      chip.textContent = label;
+      chip.addEventListener('click', () => toggleFilter(variant, value));
+      return chip;
+    }
+
+    function toggleFilter(type, value) {
+      const set = state[type];
+      if (set.has(value)) {
+        set.delete(value);
+      } else {
+        if (type !== 'integrations') {
+          set.clear();
+        }
+        set.add(value);
+      }
+      renderFilters();
+      renderArticles();
+      renderAI();
+    }
+
+    function renderFilters() {
+      const personas = new Set();
+      const tiers = new Set();
+      const integrations = new Set();
+      state.articles.forEach(article => {
+        article.persona.forEach(p => personas.add(p));
+        article.service_tier.forEach(t => tiers.add(t));
+        article.integrations.forEach(i => integrations.add(i));
+      });
+
+      elements.personaOptions.textContent = '';
+      personas.forEach(persona => {
+        const chip = createChip(persona, 'persona', persona, state.persona.has(persona));
+        elements.personaOptions.appendChild(chip);
+      });
+
+      elements.tierOptions.textContent = '';
+      tiers.forEach(tier => {
+        const chip = createChip(tier, 'tier', tier, state.tier.has(tier));
+        elements.tierOptions.appendChild(chip);
+      });
+
+      elements.integrationOptions.textContent = '';
+      if (!integrations.size) {
+        elements.integrationOptions.innerHTML = '<span style="color: var(--text-light); font-size: 13px;">No integration-specific content in sample set.</span>';
+      } else {
+        integrations.forEach(integration => {
+          const chip = createChip(integration, 'integrations', integration, state.integrations.has(integration));
+          elements.integrationOptions.appendChild(chip);
+        });
+      }
+    }
+
+    function computeScore(article) {
+      const personaMatch = article.persona.some(p => state.persona.has(p)) ? 1 : 0;
+      const tierMatch = article.service_tier.some(t => state.tier.has(t)) ? 1 : 0;
+      const integrationMatch = state.integrations.size === 0 || article.integrations.some(i => state.integrations.has(i));
+      if (!(personaMatch && tierMatch && integrationMatch)) {
+        return 0;
+      }
+      const signal = article.signals || { views_30d: 0, upvotes_30d: 0, downvotes_30d: 0 };
+      const engagementScore = Math.log10(signal.views_30d + 1);
+      const sentiment = signal.upvotes_30d + signal.downvotes_30d > 0 ? (signal.upvotes_30d - signal.downvotes_30d) / (signal.upvotes_30d + signal.downvotes_30d) : 0;
+      const freshnessPenalty = Math.max(0, daysSince(article.last_reviewed));
+      return engagementScore * (1 + sentiment) - freshnessPenalty * 0.01;
+    }
+
+    function daysSince(dateString) {
+      if (!dateString) return 90;
+      const date = new Date(dateString);
+      if (Number.isNaN(date.getTime())) return 90;
+      const diff = Date.now() - date.getTime();
+      return Math.floor(diff / (1000 * 60 * 60 * 24));
+    }
+
+    function renderArticles() {
+      const scored = state.articles
+        .map(article => ({ article, score: computeScore(article) }))
+        .filter(item => item.score > 0)
+        .sort((a, b) => b.score - a.score);
+
+      elements.articleGrid.textContent = '';
+      if (!scored.length) {
+        elements.noArticles.classList.remove('hidden');
+        return;
+      }
+      elements.noArticles.classList.add('hidden');
+
+      scored.slice(0, 9).forEach(({ article }) => {
+        const card = document.createElement('article');
+        card.className = 'article-card';
+
+        const header = document.createElement('div');
+        header.className = 'badge-row';
+        const personaBadge = document.createElement('span');
+        personaBadge.className = 'badge';
+        personaBadge.textContent = article.persona.join(' • ');
+        header.appendChild(personaBadge);
+
+        const tierBadge = document.createElement('span');
+        tierBadge.className = 'badge';
+        tierBadge.textContent = article.service_tier.join(' • ');
+        header.appendChild(tierBadge);
+
+        if (article.is_plus_only) {
+          const plus = document.createElement('span');
+          plus.className = 'badge positive';
+          plus.textContent = 'Ramp Plus';
+          header.appendChild(plus);
+        }
+
+        const headline = document.createElement('h3');
+        headline.textContent = article.title;
+
+        const snippet = document.createElement('p');
+        snippet.textContent = article.snippet || 'Structured summary coming soon.';
+
+        const footer = document.createElement('div');
+        footer.className = 'article-footer';
+
+        const signal = article.signals || { views_30d: 0, upvotes_30d: 0, downvotes_30d: 0 };
+        const sentiment = signal.upvotes_30d + signal.downvotes_30d > 0
+          ? Math.round(((signal.upvotes_30d / (signal.upvotes_30d + signal.downvotes_30d)) || 0) * 100)
+          : null;
+
+        const sentimentBadge = document.createElement('span');
+        sentimentBadge.className = 'badge' + (sentiment !== null && sentiment < 40 ? ' warning' : '');
+        sentimentBadge.textContent = sentiment !== null ? `${sentiment}% positive` : 'No feedback';
+        footer.appendChild(sentimentBadge);
+
+        const lastReviewed = document.createElement('span');
+        lastReviewed.textContent = `Reviewed ${daysSince(article.last_reviewed)}d ago`;
+        footer.appendChild(lastReviewed);
+
+        const views = document.createElement('span');
+        views.innerHTML = `${signal.views_30d.toLocaleString()} views`;
+        footer.appendChild(views);
+
+        card.appendChild(header);
+        card.appendChild(headline);
+        card.appendChild(snippet);
+        card.appendChild(footer);
+
+        card.addEventListener('click', () => {
+          window.open(article.source_url, '_blank');
+        });
+
+        elements.articleGrid.appendChild(card);
+      });
+    }
+
+    function renderAI() {
+      const rows = state.chunks
+        .filter(chunk => {
+          const personaMatch = chunk.persona.some(p => state.persona.has(p));
+          const tierMatch = chunk.service_tier.some(t => state.tier.has(t));
+          const integrationMatch = state.integrations.size === 0 || (chunk.integrations || []).some(i => state.integrations.has(i));
+          return personaMatch && tierMatch && integrationMatch;
+        })
+        .sort((a, b) => (b.confidence || 0) - (a.confidence || 0));
+
+      elements.aiTableBody.textContent = '';
+      if (!rows.length) {
+        const emptyRow = document.createElement('tr');
+        const cell = document.createElement('td');
+        cell.colSpan = 5;
+        cell.innerHTML = '<div class="empty-state">No persona-specific chunks yet. AI falls back to universal facts.</div>';
+        emptyRow.appendChild(cell);
+        elements.aiTableBody.appendChild(emptyRow);
+        return;
+      }
+
+      rows.forEach(chunk => {
+        const tr = document.createElement('tr');
+
+        const titleCell = document.createElement('td');
+        titleCell.innerHTML = `<strong>${chunk.title}</strong><br /><a href="${chunk.citations[0]?.url || '#'}" target="_blank" rel="noopener">${chunk.citations[0]?.label || 'Source'}</a>`;
+        tr.appendChild(titleCell);
+
+        const personaCell = document.createElement('td');
+        personaCell.textContent = `${chunk.persona.join(' • ')} \n ${chunk.service_tier.join(' • ')}`;
+        tr.appendChild(personaCell);
+
+        const summaryCell = document.createElement('td');
+        summaryCell.textContent = chunk.summary;
+        tr.appendChild(summaryCell);
+
+        const confidenceCell = document.createElement('td');
+        confidenceCell.textContent = `${Math.round((chunk.confidence || 0) * 100)}%`;
+        tr.appendChild(confidenceCell);
+
+        const statusCell = document.createElement('td');
+        const dot = document.createElement('span');
+        dot.className = 'status-dot ' + (chunk.allowed_for_ai ? 'good' : 'alert');
+        statusCell.appendChild(dot);
+        statusCell.append(` ${chunk.allowed_for_ai ? 'Approved' : 'Human review required'}`);
+        tr.appendChild(statusCell);
+
+        elements.aiTableBody.appendChild(tr);
+      });
+    }
+
+    function renderOps() {
+      const queue = state.articles
+        .map(article => {
+          const signal = article.signals || { views_30d: 0, upvotes_30d: 0, downvotes_30d: 0 };
+          const votes = signal.upvotes_30d + signal.downvotes_30d;
+          const sentiment = votes > 0 ? signal.upvotes_30d / votes : 1;
+          const days = daysSince(article.last_reviewed);
+          const urgency = (signal.views_30d / 1000) + (1 - sentiment) * 5 + (days > 60 ? 2 : 0);
+          return { article, sentiment, days, urgency };
+        })
+        .sort((a, b) => b.urgency - a.urgency)
+        .slice(0, 5);
+
+      elements.alertList.textContent = '';
+      queue.forEach(item => {
+        const block = document.createElement('div');
+        block.className = 'list-item';
+        block.innerHTML = `<strong>${item.article.title}</strong><span>${item.article.persona.join(' • ')} | ${item.article.service_tier.join(' • ')}</span><span>Views (30d): ${item.article.signals.views_30d.toLocaleString()} | Positive: ${Math.round(item.sentiment * 100)}%</span><span>Reviewed ${item.days}d ago</span>`;
+        elements.alertList.appendChild(block);
+      });
+
+      const freshness = state.articles
+        .sort((a, b) => daysSince(b.last_reviewed) - daysSince(a.last_reviewed))
+        .slice(0, 4);
+      elements.freshnessList.textContent = '';
+      freshness.forEach(article => {
+        const days = daysSince(article.last_reviewed);
+        const block = document.createElement('div');
+        block.className = 'list-item';
+        block.innerHTML = `<strong>${article.title}</strong><span>Last reviewed ${days}d ago by ${article.owner_team}</span>`;
+        elements.freshnessList.appendChild(block);
+      });
+
+      const swimlanes = {
+        Backlog: [],
+        Draft: [],
+        Review: [],
+        Publish: []
+      };
+      queue.forEach((item, idx) => {
+        const stage = idx === 0 ? 'Draft' : idx === 1 ? 'Review' : idx === 2 ? 'Publish' : 'Backlog';
+        swimlanes[stage].push(item.article);
+      });
+
+      elements.kanban.textContent = '';
+      Object.entries(swimlanes).forEach(([stage, cards]) => {
+        const column = document.createElement('div');
+        column.className = 'kanban-column';
+        column.innerHTML = `<h4>${stage}</h4>`;
+        if (!cards.length) {
+          const empty = document.createElement('div');
+          empty.className = 'empty-state';
+          empty.style.padding = '12px';
+          empty.textContent = 'No items';
+          column.appendChild(empty);
+        } else {
+          cards.forEach(article => {
+            const card = document.createElement('div');
+            card.className = 'kanban-card';
+            card.innerHTML = `<strong>${article.title}</strong><span>${article.persona.join(' • ')} | ${article.service_tier.join(' • ')}</span>`;
+            column.appendChild(card);
+          });
+        }
+        elements.kanban.appendChild(column);
+      });
+    }
+
+    function updateGlobalMetrics() {
+      const totalViews = state.articles.reduce((sum, article) => sum + (article.signals?.views_30d || 0), 0);
+      const lowSentiment = state.articles.filter(article => {
+        const signal = article.signals || {};
+        const votes = (signal.upvotes_30d || 0) + (signal.downvotes_30d || 0);
+        if (!votes) return false;
+        return signal.upvotes_30d / votes < 0.4;
+      }).length;
+      elements.metricViews.textContent = totalViews.toLocaleString();
+      elements.metricSentiment.textContent = `${lowSentiment} of ${state.articles.length}`;
+      elements.metricChunks.textContent = state.chunks.length;
+    }
+
+    Promise.all([
+      fetch('data/articles.json').then(r => r.json()),
+      fetch('data/chunks.json').then(r => r.json())
+    ]).then(([articles, chunks]) => {
+      state.articles = articles;
+      state.chunks = chunks;
+      renderFilters();
+      renderArticles();
+      renderAI();
+      renderOps();
+      updateGlobalMetrics();
+    }).catch(error => {
+      console.error('Failed to load data', error);
+      elements.articleGrid.innerHTML = '<div class="empty-state">Unable to load prototype data.</div>';
+    });
+  </script>
+</body>
+</html>

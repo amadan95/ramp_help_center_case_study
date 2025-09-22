@@ -1,22 +1,22 @@
 {
   "name": "help-center-app",
   "version": "1.0.0",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web",
-    "build": "expo export --platform web"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "export": "next build && next export"
   },
   "dependencies": {
-    "expo": "~54.0.9",
-    "expo-status-bar": "~3.0.8",
-    "expo-router": "^3.5.20",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "react-native": "0.81.4",
-    "react-native-web": "^0.21.0"
+    "next": "^13.4.19",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-native-web": "^0.19.8"
   },
-  "private": true
+  "devDependencies": {
+    "eslint": "^8.49.0",
+    "eslint-config-next": "^13.4.19"
+  }
 }

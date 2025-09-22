@@ -1,0 +1,25 @@
+{
+  "cli": {
+    "version": ">= 5.9.1"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "distribution": "internal"
+    },
+    "production": {}
+  },
+  "submit": {
+    "production": {}
+  },
+  "deploy": {
+    "production": {
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://support.ramp.com/api/v2/help_center/en-us"
+      }
+    }
+  }
+}
