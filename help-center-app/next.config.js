@@ -14,6 +14,7 @@ const nextConfig = {
   // Handle images from Expo/RN
   images: {
     disableStaticImages: true,
+    unoptimized: true,
   },
 };
 

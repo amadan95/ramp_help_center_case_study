@@ -2,5 +2,6 @@
   "version": 2,
   "builds": [
     { "src": "help-center-app/package.json", "use": "@vercel/next@latest" }
-  ]
+  ],
+  "outputDirectory": "help-center-app/.next"
 }
