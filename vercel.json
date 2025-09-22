@@ -1,7 +1,7 @@
 {
   "version": 2,
   "builds": [
-    { "src": "help-center-app/next.config.js", "use": "@vercel/next@latest" }
+    { "src": "help-center-app/package.json", "use": "@vercel/next@latest" }
   ],
   "routes": [
     { "src": "/(.*)", "dest": "help-center-app/$1" }
