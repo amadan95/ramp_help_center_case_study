@@ -1,0 +1,129 @@
+Troubleshooting Ramp login 
+issues
+V er ific ation Verified
+Owner 2 G Gumloop
+Help Cent er 
+URL 
+https://support.ramp.com/hc/en-us/articles/1500005527981
+Troubleshooting-Ramp-login-issues
+T ags 
+Last edited at: 20250707T151150Z  
+Help Center URL Troubleshooting Ramp login issues
+Overview
+Having trouble logging into Ramp? Follow these steps to get back on track.
+Before you begin
+If you are logging in for the first time, follow this guide.
+Otherwise, please make sure that you are using the correct login method: email 
+and password or Single Sign On SSO. If you arenʼt sure if youʼve used a 
+password or SSO in the past, try using the password reset form. The form will 
+either allow you to reset your password or notify you via email that your 
+organization uses SSO.
+T r oubleshooting R amp login issues
+1
+Jump to:
+Forgotten credentials
+Stolen password
+Not receiving password reset email
+Phone number for MFA no longer active
+MFA SMS delivery issues
+Forgotten authenticator app for MFA
+Single sign-on SSO issues
+Understanding Ramp error messages
+Additional resources
+What if I forgot my credentials?
+Forgotten username
+If you forgot your username, try signing in with the email address associated with 
+your Ramp account. If youʼre still unsure, contact your IT department for help.
+Forgotten password
+If you forgot your password, first request to reset your password. Then, follow the 
+instructions in the email you receive.
+T r oubleshooting R amp login issues
+2
+What if I no longer see the option to login with 
+password?
+No longer seeing log in with password
+If you no longer see the option to sign in with a password, your account may be 
+set up to use Single Sign-On SSO instead.
+ Try signing in using one of the providers shown on the login screen—like 
+Google, Microsoft Entra, Okta, OneLogin, or JumpCloud.
+    If your email uses Google Workspace Gmail), Ramp may support Google SSO 
+for you automatically—even if your company hasnʼt explicitly set up SSO.
+2. No provider listed? You may be prompted to use a passkey instead.
+    Passkeys are a more secure way to log in. They replace passwords and are 
+resistant to phishing, using your deviceʼs built-in security features.
+If none of these options work, then you can reset your password. Then, follow the 
+instructions in the email you receive.
+What if my password was stolen?
+If you believe your password was stolen, reset it immediately using the password 
+reset link and notify your IT department.
+T r oubleshooting R amp login issues
+3
+What if I didn't receive a password reset email?
+First, check your spam or junk folder. Ensure youʼre using the email address 
+associated with your Ramp account. If you still havenʼt received it, contact our 
+support team for further assistance.
+What if I can no longer access the phone number used 
+to receive MFA codes?
+If you no longer have access to your original phone number used for MFA 
+(independent of SMS or call), you can request to change the phone number in the 
+login screen by following the steps in this article.
+What if I can't receive the MFA codes by SMS?
+If you cannot receive MFA codes sent by SMS, please review the steps described 
+in this article.
+What if I no longer have my authenticator app for MFA?
+If you no longer have access to your original authenticator app used for MFA, you 
+can request to set up a new authenticator app in the login screen by following the 
+steps in this article.
+What if I'm facing SSO issues?
+T r oubleshooting R amp login issues
+4
+Google SSO
+ Ensure youʼre using the correct email address registered with Ramp. 
+Sometimes users accidentally select their personal email address.
+ If needed, contact your IT department for clarification.
+SAML SSO (e.g. Okta, Microsoft Entra ID)
+ Ask your IT department if Okta SSO is activated for Ramp.
+ Confirm your email address is enabled to access Ramp.
+ Try logging in directly to Ramp instead of through Okta.
+What if Iʼm seeing an error message on the login 
+screen?
+Message R e ason 
+We're unable to log you in.
+Your account may be locked, or your account may have
+been deactivated. Please confirm with your
+Administrator.
+Network error encountered.
+This usually indicates a device or network issue. Please
+try a different browser, device, and/or network. Also,
+make sure to disable any ad blockers or VPNs.
+Too many failed login attempts.
+Wait and try again or reset your
+password.
+Please wait before trying to log in again. Unfortunately,
+the exact wait time is out of our control.
+Your session has expired. Sign
+in again.
+This may be due to timezone issues. Please make sure
+your device timezone aligns with the server. You can
+validate this here.
+T r oubleshooting R amp login issues
+5
+Message R e ason 
+We are having trouble
+authenticating you. Try again or
+contact support.
+Likely due to too many login attempts. Please reset your
+password and wait before logging in again.
+Oops, something went wrong. Please contact our support team for further assistance.
+What if I still need help?
+Below are some additional resources you can reference:
+Review the initial sign-in guide for first-time Ramp users.
+Ensure your web browser allows pop-up windows; blocking them can cause 
+login issues.
+If youʼve followed these steps and still canʼt log in, please vote on the article and 
+provide a comment with feedback about what's missing - we are always trying to 
+improve these articles!
+After that, please contact our support team for further assistance and we would 
+be happy to assist you with your issue.
+T r oubleshooting R amp login issues
+6

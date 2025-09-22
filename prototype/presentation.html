@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ramp Help Center Redesign – Case Deck</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: #1F1F1F;
+      background: #FCFBFA;
+    }
+
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: radial-gradient(circle at top right, rgba(228, 242, 34, 0.25), transparent 46%),
+                  radial-gradient(circle at bottom left, rgba(146, 79, 53, 0.22), transparent 52%),
+                  #FCFBFA;
+      color: #1F1F1F;
+    }
+
+    .deck {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slide {
+      width: 1024px;
+      height: 576px;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid #E0E4F2;
+      border-radius: 28px;
+      box-shadow: 0 26px 60px rgba(31, 31, 31, 0.18);
+      padding: 48px 56px;
+      display: none;
+      flex-direction: column;
+      gap: 28px;
+      backdrop-filter: blur(22px);
+    }
+
+    .slide.active {
+      display: flex;
+      animation: fadeIn 0.6s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(46px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    h1, h2 {
+      margin: 0;
+      letter-spacing: -0.02em;
+    }
+
+    h1 { font-size: 40px; font-weight: 800; }
+    h2 { font-size: 32px; font-weight: 700; }
+
+    .subtitle {
+      font-size: 20px;
+      color: #787868;
+      max-width: 700px;
+      line-height: 1.5;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      font-size: 18px;
+      line-height: 1.55;
+    }
+
+    li::before {
+      content: '•';
+      margin-right: 14px;
+      color: #924F35;
+      font-weight: 700;
+    }
+
+    .tagline {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 16px;
+      color: #787868;
+    }
+
+    .badge {
+      background: #E4F222;
+      color: #1F1F1F;
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .panel {
+      background: rgba(249, 249, 243, 0.9);
+      border: 1px solid rgba(135, 136, 104, 0.18);
+      border-radius: 18px;
+      padding: 18px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .panel strong {
+      font-size: 15px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #924F35;
+    }
+
+    .panel span {
+      font-size: 16px;
+      line-height: 1.45;
+      color: #1F1F1F;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 26px;
+    }
+
+    .card {
+      border: 1px solid rgba(120, 120, 104, 0.24);
+      border-radius: 20px;
+      padding: 20px 24px;
+      background: rgba(255, 255, 255, 0.92);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .card h3 {
+      margin: 0;
+      font-size: 17px;
+      color: #1F1F1F;
+    }
+
+    .card p {
+      margin: 0;
+      color: #787868;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 14px;
+      color: #787868;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .footer span { color: #1F1F1F; }
+  </style>
+</head>
+<body>
+  <div class="deck" id="deck">
+    <section class="slide active">
+      <div class="tagline"><span class="badge">Ramp</span> Help Center Redesign</div>
+      <h1>Personalised knowledge for humans & AI</h1>
+      <p class="subtitle">A metadata-driven, Zendesk-powered prototype that aligns Ramp’s help center with persona-aware delivery, safe AI retrieval, and operator visibility.</p>
+      <div class="grid">
+        <div class="panel">
+          <strong>Why change?</strong>
+          <span>Dense, one-size-fits-all articles slow customers and degrade AI accuracy.</span>
+        </div>
+        <div class="panel">
+          <strong>What we built</strong>
+          <span>React Native (web) app ingesting live support.ramp.com content, auto-tagging persona, tier, integration, and freshness.</span>
+        </div>
+        <div class="panel">
+          <strong>Outcomes</strong>
+          <span>Guided experiences for authenticated & anonymous users, RAG-ready chunks, and Ops feedback loops.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <h2>The assignment → solution map</h2>
+      <ul>
+        <li><strong>Authenticated & unauthenticated humans:</strong> Filters simulate identity; in production we’d hydrate persona/tier from Ramp auth to auto-tailor the landing.</li>
+        <li><strong>AI RAG consumers:</strong> Chunk table exposes safety flags, audiences, and confidence scores for retrieval.</li>
+        <li><strong>Content organization:</strong> Articles normalized into knowledge nodes with persona, tier, integration, journey stage, freshness, and feedback metrics.</li>
+        <li><strong>Ops workflow:</strong> High impact + stale queues highlight what to fix first, fed by Zendesk votes and update cadence.</li>
+        <li><strong>Feedback loop:</strong> Sentiment, recency, and (future) ticket/search telemetry rolled into prioritization.</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h2>Live data pipeline</h2>
+      <div class="grid">
+        <div class="panel">
+          <strong>Zendesk + CSV ingest</strong>
+          <span>Anonymous GET requests pull categories/sections/articles, and the 30-day usage CSV (447 rows) feeds views & votes for every article.</span>
+        </div>
+        <div class="panel">
+          <strong>Metadata inference</strong>
+          <span>Keyword heuristics map persona, tier (Base / Plus), integration (QuickBooks, Okta, etc.), journey stage, and regions.</span>
+        </div>
+        <div class="panel">
+          <strong>Signals</strong>
+          <span>`vote_sum`, `vote_count`, `updated_at` drive sentiment, confidence, and freshness scoring.</span>
+        </div>
+        <div class="panel">
+          <strong>Chunk factory</strong>
+          <span>Each article renders into RAG chunk with summary, persona constraints, safety flag (`allowed_for_ai`).</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <h2>Metadata schema (sample)</h2>
+      <div class="two-col">
+        <div class="card">
+          <h3>Core fields</h3>
+          <p>Article id, title, source URL, snippet, freshness (`last_reviewed`), owner team, product variant, region.</p>
+        </div>
+        <div class="card">
+          <h3>Audience overlays</h3>
+          <p>`persona`: employee / admin / bookkeeper / vendor / IT<br/>`service_tier`: Base / Plus<br/>`integrations`: (QuickBooks, Okta, TravelPerk, etc.)</p>
+        </div>
+        <div class="card">
+          <h3>Experience drivers</h3>
+          <p>`content_type`, `journey_stage`, topic cluster, chunk safety flags, confidence scores.</p>
+        </div>
+        <div class="card">
+          <h3>Signals & loops</h3>
+          <p>Votes, calculated sentiment, freshness days, queue urgency. Hooks for future ticket/search telemetry.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <h2>Human experience</h2>
+      <ul>
+        <li>Hero metrics summarise corpus health (articles loaded, votes, positivity).</li>
+        <li>Persona/tier/integration chips act as intent selection for unauthenticated users; authenticated sessions would pre-fill.</li>
+        <li>Article cards show relevance badges, Ramp Plus gating, sentiment pills, and last-review freshness.</li>
+        <li>Clicks deep-link to Zendesk, preserving single source of truth.</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h2>Inside the app</h2>
+      <div class="two-col">
+        <div class="card">
+          <h3>Hero & metrics</h3>
+          <p>Live Zendesk sync plus key stats (articles, sentiment, AI chunks, helpful/unhelpful vote mix) keep health indicators visible without clutter.</p>
+        </div>
+        <div class="card">
+          <h3>Audience controls</h3>
+          <p>Persona, tier, and integration filters simulate identity-aware delivery and give anonymous visitors an intent selector.</p>
+        </div>
+        <div class="card">
+          <h3>View switcher</h3>
+          <p>Tabs flip between Human, AI, and Ops modes so each stakeholder sees tailored information without leaving the app.</p>
+        </div>
+        <div class="card">
+          <h3>Human view</h3>
+          <p>Ranks articles by sentiment + freshness, surfaces Ramp Plus gating, and offers one-click access to Zendesk sources. Usage placeholders appear when only CSV data exists.</p>
+        </div>
+        <div class="card">
+          <h3>AI view</h3>
+          <p>Presents chunk metadata: persona/tier, summary, confidence, and safety flag—exact inputs for a RAG service.</p>
+        </div>
+        <div class="card">
+          <h3>Operator console</h3>
+          <p>Queues highlight high-impact refreshes and stale content, with AI-generated suggestions describing the gap to address.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <h2>Core tenets in the UI</h2>
+      <div class="grid">
+        <div class="panel">
+          <strong>Accuracy</strong>
+          <span>Sentiment metric (positive-vote rate) and chunk confidence gating surface risky articles for review; AI view hides unsafe content.</span>
+        </div>
+        <div class="panel">
+          <strong>Efficiency</strong>
+          <span>Persona/tier/integration filters collapse navigation paths so authenticated and anonymous users land on relevant guidance fast.</span>
+        </div>
+        <div class="panel">
+          <strong>Coverage</strong>
+          <span>Chunk count and topic coverage keep zero-result scenarios rare; fallback messaging prompts broader filters.</span>
+        </div>
+        <div class="panel">
+          <strong>User & operator experience</strong>
+          <span>Operator console pairs queue priority with AI suggestions, while the UI stays light for customers.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <h2>AI retrieval view</h2>
+      <ul>
+        <li>Chunk table filters to the same persona/tier controls used in the human view.</li>
+        <li>Confidence blends freshness + sentiment to safeguard accuracy; low scores feed the Ops queue.</li>
+        <li>`allowed_for_ai` prevents Plus-only or sensitive content from leaking into public bots.</li>
+        <li>Each chunk links back to the canonical article for citation and human audit.</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h2>Operator console</h2>
+      <ul>
+        <li><strong>High impact refresh queue:</strong> High-traffic or low-sentiment articles bubble to the top with persona/tier context.</li>
+        <li><strong>Stale content list:</strong> Auto-detects articles untouched for 90+ days to protect accuracy.</li>
+        <li>Cards link to Zendesk for editing; README outlines structured authoring, review workflow, and embedding refresh.</li>
+      </ul>
+    </section>
+
+    <section class="slide">
+      <h2>Feedback & improvement loop</h2>
+      <div class="grid">
+        <div class="panel">
+          <strong>Live telemetry</strong>
+          <span>Votes, last updated, and persona filters already feed prioritisation.</span>
+        </div>
+        <div class="panel">
+          <strong>Planned signals</strong>
+          <span>Zendesk ticket deflection, search queries with zero results, in-product retry metrics.</span>
+        </div>
+        <div class="panel">
+          <strong>AI safety</strong>
+          <span>Confidence thresholds route shaky responses to manual review; version history resolves regressions.</span>
+        </div>
+        <div class="panel">
+          <strong>Success metrics</strong>
+          <span>Reduce support downvotes 50%, cut solved-session depth 25%, speed median article refresh to &lt;5 days.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <h2>Roadmap & next steps</h2>
+      <ul>
+        <li><strong>Phase 1</strong>: Productionise schema in CMS, backfill top 100 articles, add authenticated pre-filters.</li>
+        <li><strong>Phase 2</strong>: Integrate telemetry dashboards, structured authoring UI, automated linting & embedding refresh.</li>
+        <li><strong>Phase 3</strong>: Deploy hybrid vector/keyword retrieval, connect to live support bots, close ticket-loop automation.</li>
+        <li><strong>Ask</strong>: Align on data contracts with Zendesk + auth, prioritise instrumentation, and pilot with operations team.</li>
+      </ul>
+    </section>
+  </div>
+  <div class="footer">Use ← → keys • Slide <span id="slideIndex">1</span> of <span id="slideTotal">11</span></div>
+  <script>
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const total = slides.length;
+    const indexEl = document.getElementById('slideIndex');
+    const totalEl = document.getElementById('slideTotal');
+    totalEl.textContent = total;
+    let current = 0;
+
+    function showSlide(idx) {
+      slides[current].classList.remove('active');
+      current = (idx + total) % total;
+      slides[current].classList.add('active');
+      indexEl.textContent = current + 1;
+    }
+
+    window.addEventListener('keydown', event => {
+      if (event.key === 'ArrowRight' || event.key === 'PageDown') {
+        showSlide(current + 1);
+      }
+      if (event.key === 'ArrowLeft' || event.key === 'PageUp') {
+        showSlide(current - 1);
+      }
+    });
+
+    document.body.addEventListener('click', () => showSlide(current + 1));
+  </script>
+</body>
+</html>

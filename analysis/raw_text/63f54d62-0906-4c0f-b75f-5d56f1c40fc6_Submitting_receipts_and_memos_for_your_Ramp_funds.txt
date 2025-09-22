@@ -1,0 +1,218 @@
+Submitting receipts and memos 
+for your Ramp funds
+V er ific ation Verified
+Owner 2 G Gumloop
+Help 
+Cent er URL 
+https://support.ramp.com/hc/en-us/articles/360042588454
+Submitting-receipts-and-memos-for-your-Ramp-funds
+T ags 
+Last edited at: 20250711T182545Z  
+Help Center URL Submitting receipts and memos for your Ramp funds
+Overview
+Ramp offers multiple ways for you to submit receipts and memos for transactions 
+on Ramp funds. The following article will cover submitting items for such 
+transactions.
+Please note that if you would like your company to reimburse you for spend 
+incurred on a non-Ramp fund, you will want to refer to this reimbursement article 
+instead. If you are an admin and would like to set up reimbursements for those 
+transactions made on your employees' funds, please view this guide.
+Jump to:
+Ways to submit receipts
+Submit ting r eceipt s and memos f or y our R amp funds
+1
+Leveraging our automatic receipt matching
+Forwarding receipts via additional email addresses
+Automated memos
+Ramp suggested memos via SMS
+Submitting memos via email
+Frequently Asked Questions FAQs)
+Ways to submit receipts
+After you make a transaction on your physical card, funds, or virtual card, you can 
+send your receipts to Ramp in a few ways:
+Channel Receipts Memos Accounting Fields
+| SMS      | Text us at HIRAMP  
+447267  We try to match it with a transaction, or you can create a 
+reimbursement  
+For international users, please text 8443311023 (toll-free)                                       
+| Text us - we will add the memo to the last transaction | Click the submission link 
+sent via SMS for a mobile-friendly submission flow |
+| Email    | Forward to receipts@ramp.com. See how to set-up here.  
+Reimbursements must be forwarded to reimbursements@ramp.com)                       
+| Add "memo: enter your memo" in the body of the email | When receipts are 
+captured automatically with the Gmail integration, we offer the option to code 
+dynamic fields |
+Ramp.com Click into the transaction
+to upload the receipt or
+bulk upload manually via
+Click into the
+transaction or
+missing items section
+and add a memo
+Click into the
+transaction or
+missing items section
+and enter the field
+Submit ting r eceipt s and memos f or y our R amp funds
+2
+the missing items
+section.
+Mobile App
+Capture a receipt using
+our mobile app or use the
+share extension on your
+phone
+Tap into the
+transaction to record
+your memo
+Scroll further to add
+your accounting
+fields in-app
+| Slack    | Send your receipt to the Ramp app on Slack  
+Simple type /ramp, press enter, then attach a picture of your receipt to the next 
+message)                                                                                        | Add a memo when 
+the Slack app prompts you to (after the receipt has been matched) | Click on the 
+link within Slack to enter the fields within the Ramp website |
+Leveraging automatic receipt matching
+Ramp offers automatic receipt matching for multiple languages/countries and 
+international currencies, which means that we'll automatically match your receipts 
+to the correct transactions in seconds. You no longer have to spend time finding 
+receipts and attaching them to your transactions— Ramp will do it for you. 
+For transactions made in person, we'll notify you via SMS when a receipt is 
+required. Simply reply with a photo of your receipt or text us at HIRAMP 447
+267. Any text you add to this SMS will be added as a memo.
+For online transactions, we'll notify you via email when a receipt is required. 
+Simply respond or email/forward your receipt(s) directly to 
+receipts@ramp.com. Simply add "memo: enter your memo" in the body of the 
+email after attaching to the email the receipt for that specific transaction, and 
+we'll automatically add the memo.
+Set up automatic receipt forwarding from your mailbox. We've written more 
+about this here.
+Supported image types: jpg, jpeg, png, pdf
+Submit ting r eceipt s and memos f or y our R amp funds
+3
+The maximum receipt upload size is 60MB 10MB for web submissions)
+The maximum page length for PDFs is 50 pages
+Pro tips
+To include a memo when forwarding your receipts for automatic matching, 
+simply enter Memo: insert memo here into the body of the email that you 
+send to us.
+   Please note that it must be submitted in this format; otherwise, it may not apply 
+correctly to the transaction.
+   You must also have the dynamic email setting enabled for entering memos 
+within Gmail.
+Ramp will send you weekly emails each Friday reminding you of any missing 
+items.
+Save our email (receipts@ramp.com) in your contacts.
+You can forward multiple receipts to Ramp at once.
+You can also set up automatic forwarding of email receipts via your mailbox. 
+Read more about that here. 
+Forwarding receipts via additional email addresses
+Any receipt forwarded from the email associated with your Ramp account will be 
+automatically matched to a transaction. We can also accept receipts from other 
+email addresses you set up, such as your email address. Please note that 
+additional email addresses can only be linked to one Ramp account.
+ Navigate to the Settings tab  
+Submit ting r eceipt s and memos f or y our R amp funds
+4
+ Click on Personal Settings   
+ Click Edit Profile  
+ Click Integrations  
+ Add each email address you want to accept receipts from  
+Automated memos
+Employees and administrators now have the ability to set a default memo that will 
+automatically apply to all transactions within a specific fund. When employees are 
+prompted to submit a memo during the expense submission process, we will 
+confirm with them which transactions should have this memo applied. Users can 
+add memos at the fund level in the fund settings, as well as add additional memos 
+at both the merchant and fund levels for other transactions.
+Submit ting r eceipt s and memos f or y our R amp funds
+5
+When submitting a memo, users will see a dropdown menu where they can select 
+the transactions to which the memo can be applied. To delete these memos, 
+simply navigate to a transaction that has the automated memo and open the 
+dropdown menu again to make the necessary edits.
+Submit ting r eceipt s and memos f or y our R amp funds
+6
+Ramp suggested memos via SMS
+Ramp will automatically suggest a few memos via SMS that you can select from if 
+the following requirements are met:
+You have a US number 1,
+You have SMS notifications turned on for in-person transactions in your 
+settings,
+You're using your physical card or physical card number, and
+Your transaction requires a memo and receipt.
+Here's how it works:
+If you have multiple shared funds your physical card can map transactions to, 
+we'll first ask you to confirm if we matched your transaction correctly
+If a receipt is required, we'll then prompt you to send in a receipt
+Please note there may be a few minutes between sending the receipt photo 
+and getting the text back that a receipt has been processed.
+If the transaction we matched the receipt to was the last, then we'll send 
+suggested memos. Otherwise, we'll send a link to complete the rest of the 
+missing items.
+Submit ting r eceipt s and memos f or y our R amp funds
+7
+If we are unsuccessful in matching the receipt, we'll prompt you to match their 
+receipt to a few suggested transactions 
+International employees will be linked to a different mobile web flow where 
+they can add missing items after swapping the limit via the message flow
+Submitting memos via email
+Submit ting r eceipt s and memos f or y our R amp funds
+8
+If you are using Gmail, you can directly enter memos and other fields within the 
+email, thanks to the power of interactive emails. No more logging in!
+Submit ting r eceipt s and memos f or y our R amp funds
+9
+Submit ting r eceipt s and memos f or y our R amp funds
+10
+Frequently Asked Questions (FAQs)
+What file types can I submit my receipt in?  
+Currently, you can submit receipts to Ramp in the following image formats: jpg, 
+jpeg, png, pdf
+How long does it take for Ramp to match my receipt?  
+It takes Ramp a few seconds to match a receipt. Depending on the type of receipt, 
+we'll inform you whether a receipt has been successfully matched via SMS or 
+email. If we don't find a match with your transactions, we'll also search 
+transactions from other employees across the company for a match.
+What do I do if I'm missing a receipt?  
+You can click on the transaction on your Ramp dashboard. To ask to dismiss the 
+receipt requirement, please navigate to the transaction or click on the 'Missing 
+Items' banner from your 'My Ramp' tab. Once the transaction is open, please 
+scroll and locate the vertical dots, then click on 'Request Policy Exemption'
+Why hasn't my receipt matched?  
+Ramp will do its best to match your receipts, but there will be times when our 
+system will have a harder time finding the right match. Some common reasons this 
+happens are:
+The difference in date on the charge vs. the receipt
+Multiple charges on a single receipt
+Multiple transactions with similar information (eg. recurring SaaS spend)
+If Ramp isn't able to match your receipt, don't worry! You can head over to your 
+Ramp account, find the transaction that needs a receipt, and upload your receipt 
+Submit ting r eceipt s and memos f or y our R amp funds
+11
+directly. Some things to keep in mind when you're uploading receipts in your 
+Ramp account:
+You can upload the same receipt to multiple transactions (eg. you purchase 
+two items at Amazon, they ship separately, creating two separate charges, but 
+you have only one receipt for both items)
+Our system won't always be able to auto-verify receipts; if you're sure that 
+you have the right receipt for the transaction, you should be all set!
+Why didn't I receive an SMS notification for missing items?  
+Please note: SMS notifications for missing items will only be generated when a 
+physical card is used to complete the expense.
+Am I only able to submit receipts via SMS for my latest transaction?  
+No, users can submit receipts for past transactions, not just the most recent ones.
+What if there isn't a message from Ramp requesting a memo, or the memo isn't 
+required?  
+We'll attach your message to the latest transaction that happened.
+Can I add a receipt and/or memo to a transaction after it's been synced over?  
+Once synced over, a receipt and/or memo cannot be added to it.
+What happens once I submit all of my expenses?  
+Once you submit all of your expenses on web, you'll get a reward from Ramp! 
+You'll receive three play tokens and the ability to head to the Ramp Arcade. There, 
+you can play games like Receipt Snake and Ramp Ramp Revolution. You will need 
+to click on the coin to play the games. Continue to submit your expenses on time 
+to get an even higher score with each receipt submitted!
+Submit ting r eceipt s and memos f or y our R amp funds
+12

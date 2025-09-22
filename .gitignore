@@ -1,0 +1,15 @@
+# Node
+**/node_modules/**
+**/.expo/**
+**/.expo-shared/**
+**/.DS_Store
+
+# Builds/archives
+**/*.tgz
+**/*.zip
+**/dist/**
+**/build/**
+
+# Logs
+**/*.log
+

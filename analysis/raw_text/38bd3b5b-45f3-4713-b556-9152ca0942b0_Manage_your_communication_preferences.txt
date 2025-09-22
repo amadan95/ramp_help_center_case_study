@@ -1,0 +1,82 @@
+Manage your communication 
+preferences
+Verification Verified
+Owner 2 G Gumloop
+Help Center
+URL
+https://support.ramp.com/hc/en-us/articles/1500001914421
+Manage-your-communication-preferences
+Tags
+Last edited at: 20250723T200421Z  
+Help Center URL Manage your communication preferences
+Overview
+Ramp offers a comprehensive notification system that keeps you informed about 
+various activities on the platform through SMS, email, and push notifications.
+Note: Some notifications are mandatory due to legal obligations, agreements, or 
+requirements from financial institution partners.
+Manage your notification preferences
+Go to Profile (top right)  My settings → Notifications]
+(https://app.ramp.com/settings/personal-settings/notifications) to manage 
+your preferences.
+Manage y our communic ation pr ef er ences
+1
+Depending on your role on Ramp, you can manage different types of notifications:
+Personal activity: Cardholders can set preferences for when and how Ramp 
+reminds them about things related to their activity on Ramp. This includes 
+when to submit receipts for your own transactions, any applicable approvals 
+(reimbursements, cards, Bill Pay), reminders, and any Bill Pay alerts.
+Company activity: Admins, card managers, and business owners can manage 
+different notifications related to the companyʼs activity on Ramp. This includes 
+an email digest (options to receive the digest daily or weekly), savings 
+updates, teammate activities, savings insights, spend reports, and 
+notifications about missing items.
+Frequently Asked Questions (FAQs)
+Which Ramp numbers will I receive/send communications from?
+Our shortcode, HIRAMP 447267  
+Our longcode, 1 844 331 1023  
+And for the UK & some international cases, we have 44 7883 317746
+For those with mobile devices and carriers that have rich communication support 
+RCS, Ramp will automatically send messages via RCS instead of our traditional 
+numbers. RCS is a new standard agreed upon by mobile carriers and phone 
+manufacturers that will likely be supported by additional devices, countries, and 
+mobile carriers over time. It will replace SMS and MMS. Inbound messages sent to 
+our phone numbers will continue to be received, though outbound messages from 
+Ramp will default to RCS when available.
+Manage y our communic ation pr ef er ences
+2
+What does the RCS contact look like?
+The RCS contact will show as "verified" and have all the standard Ramp support 
+information, such as the website address, support phone number, and terms and 
+conditions.
+Why might Google Messages not be able to send attachments or otherwise 
+seem unreliable?  
+Some mobile carriers have known limitations. For example, Google Voice numbers 
+are unable to deliver MMS messages to our Ramp shortcode HIRAMP. Google 
+Voice users should use our 1 844 331 1023 number instead to send MMS.
+How can I identify emails that allow me to manage my notification preferences?
+Emails that allow you to manage your notification preferences will have a link at 
+the bottom that says Update notification preferences.
+What should I do if I'm not receiving notifications that I've subscribed to?  
+Check your spam or junk mail folder to ensure that the notifications aren't being 
+filtered. If the issue persists, contact Support for assistance.
+Can I receive Ramp notifications in Slack?  
+Yes! Ramp offers a Slack integration that allows you to receive real-time alerts for 
+card transactions, bill approvals, and more directly in Slack. To set this up, follow 
+the steps in our Slack integration guide for Admins.
+Can I turn off all notifications?  
+Some notifications are mandatory due to legal obligations and cannot be turned 
+off. Hereʼs why:
+Manage y our communic ation pr ef er ences
+3
+Our Platform Agreement Section 3.12 requires Ramp to notify customers about 
+material changes to the Platform Terms or other service terms. This gives you a 
+chance to review important updates and, if needed, stop using the service before 
+changes take effect. In particular, the Platform Agreement states that:
+If we make material modifications, weʼll give customers reasonable prior notice
+before those changes apply to them—unless immediate changes are needed for 
+legal, compliance, or risk-related reasons.
+Some changes are mandated by law or regulation (e.g., changes involving fees, 
+dispute procedures, or privacy rights may trigger specific notice requirements 
+under UDAAP, EFTA, Reg E, or CCPA/CPRA.
+Manage y our communic ation pr ef er ences
+4

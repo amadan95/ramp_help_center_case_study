@@ -1,0 +1,243 @@
+Submitting reimbursements
+V er ific ation Verified
+Owner 2 G Gumloop
+Help Cent er 
+URL 
+https://support.ramp.com/hc/en-us/articles/4417618448403
+Submitting-reimbursements
+T ags 
+Last edited at: 20250722T213249Z  
+Help Center URL Submitting reimbursements
+Overview
+As an employee using Ramp, here's everything you need to know to submit 
+reimbursements and get paid back. Please note that your finance team must 
+enable reimbursements for your company before you can submit a 
+reimbursement.
+Jump to:
+Set up your bank account
+Submitting reimbursements
+   How to submit a reimbursement
+     Out-of-pocket reimbursement
+     Mileage reimbursement
+   Waiting for reimbursement approval
+   Getting paid back on or off Ramp
+Submit ting r eimbursement s
+1
+Bulk submitting reimbursements
+Plus only) Bulk submitting via expense groups
+Plus only) Missing employee reimbursement permissions?
+Set up your bank account
+Once your company has turned on reimbursements, you'll see the Create 
+reimbursement or New  Reimbursement button on the top-right-hand corner of 
+your Home page. Depending on your company's preferred payment method, you 
+may be required or recommended to link a bank account to receive payment. 
+Your finance team's preferred reimbursement method:
+If your company requires electronic payments, you'll be prompted to link a 
+bank account if you try to submit a reimbursement.
+If your company has payments off Ramp enabled, your admin or manager may 
+reimburse you and pay you outside Ramp using other methods such as Zelle, 
+venmo, check, etc.
+Add your personal bank account:
+If your company has turned on electronic payments via Ramp, you'll need to 
+add your US-based personal bank or international bank account details (see 
+more on international reimbursements here) for your organization to pay you 
+directly. You can do this on the Profile (top-right-hand corner)  My Settings > 
+**Banking**.  
+Please note:
+Submit ting r eimbursement s
+2
+Linking the correct bank:
+   Your bank account must be able to make payments and receive them to make 
+repayments (e.g. you may not link a credit card)
+   You can enter your personal mailing address if prompted for an address.
+   While users are not required to verify their bank accounts to receive 
+reimbursements, we strongly encourage verification as a best practice.
+   If your company hasn't already provided your location via its human resources 
+information system HRIS, you'll be prompted to enter your place of residence for 
+regulatory purposes before you can continue to connect your bank account. You 
+may update this field in the future by going to Profile (top-right-hand corner)  My 
+Settings  Profile  Edit profile.
+Payment timeline:
+   Once a reimbursement is approved, ACH reimbursement payments typically 
+take 35 business days. Repayments to your company may also take 35 business 
+days.
+Submitting reimbursements
+How to submit a reimbursement
+There are two types of reimbursements that you may submit: 
+Out-of-pocket: any purchase made on behalf of your company excluding 
+mileage  
+Mileage: mileage reimbursements. Note: If you don't see this option, your 
+finance team has mileage reimbursements turned off for the company.)
+Submit ting r eimbursement s
+3
+There are several ways to submit a reimbursement:
+Send or forward receipts to [reimbursements@ramp.com]
+(mailto:reimbursements@ramp.com).  
+  You'll receive an email letting you know we've created your draft 
+reimbursement(s). You can find them within your dashboard under the 
+Reimbursements](https://app.ramp.com/home/my-reimbursements) section 
+under Drafts, where you must add details and submit. Emailing multiple receipts 
+will create multiple reimbursements.
+Submit via the mobile app.  
+  Download our mobile apps (iOS, Android) to submit receipts easily on the go. You 
+can save photos as draft receipts right from the app and even allow the app to 
+track your GPS for mileage reimbursements.
+Text your receipt to HIRAMP 447267 For international users, 844331
+1023  
+  Take a picture or screenshot of your receipt and text it to our number. We'll text 
+you asking if you want to match it to a transaction or create a reimbursement. 
+After selecting the reimbursement option, you can complete the reimbursement on 
+the mobile app or at a later time.
+Download our mobile apps (iOS, Android) to submit receipts easily on the go. 
+You can also save photos as draft receipts right from the app.
+Create a new Reimbursement via web or mobile browser.  
+  Go to Home  New > **Reimbursement**, where you can drag and drop your 
+receipts. You will then have to add a receipt, memo, and any other policy 
+requirements that your organization requires. To add multiple receipts to a single 
+Submit ting r eimbursement s
+4
+reimbursement, click on the existing draft reimbursement, and click on the upload 
+button in the top left corner.
+Duplicate a previous reimbursement.  
+  You may duplicate any reimbursement by clicking into the draft, approved, or 
+rejected reimbursement and clicking duplicate.
+Out-of-pocket reimbursements
+For out-of-pocket reimbursements, here are a few additional details.
+Bulk submission You can submit and edit reimbursements in bulk. Simply 
+drag multiple receipts into the upload field, wait for them to generate line items 
+in the table, and check the box next to each receipt to edit the memo, trip, and 
+accounting categories in bulk. More information here.
+Group with trip If your reimbursement is part of company travel, you may add 
+it to a trip to group them together for submission and review. Toggle the "Is 
+this a travel expense?" section and select the trip (or create a new trip).
+Add meal attendees: click the "Add Attendees" button.
+Auto-save Reimbursements will auto-save as you edit them and appear as a 
+draft on your Reimbursements main page if you click the back button.
+Edit a reimbursement after submission You or anyone in your approval chain 
+may edit the reimbursement amount before the final approval.  
+  Find out how this affects your approval flow here.
+Submitting towards a locked card If your card was auto-locked, you may 
+submit a reimbursement if the transaction date is before the lock date. If your 
+card was locked by a manager or admin, you will not be able to submit a 
+reimbursement for this card. Please contact your manager or finance team to 
+unlock this card and submit a reimbursement towards it.
+Submit ting r eimbursement s
+5
+Mileage reimbursements
+If your company has turned on mileage reimbursements, here are additional 
+details.
+GPS mileage Ramp offers an Early Access feature on iOS that uses your GPS 
+location to track the exact number of miles you've driven. Distances less than 
+500 meters and durations shorter than 30 seconds will be discarded. Android 
+GPS mileage is coming in 2025.
+Entering destinations You can input the starting and ending destinations (and 
+multiple stops) to auto-calculate the distance traveled. Ramp uses the Google 
+Maps recommended route based on traffic conditions at the time of 
+submission. The number of miles Ramp calculates may differ from the actual 
+miles you drove. You may edit the number of miles calculated if this is the 
+case.
+Manually entering miles driven You can manually enter a maximum of 999 
+miles when entering the number of miles driven. However, the reimbursement 
+can still be submitted if you enter two addresses with a distance greater than 
+1,000 miles.
+Deducting commute distance If your finance team has enabled this feature, 
+you can set your home and office addresses and choose whether to deduct 
+one-way or round-trip when submitting a mileage reimbursement.
+Reimbursement rate Your finance team can edit the reimbursement amount 
+per mile, which defaults to the IRS rate for the year.
+Frequent trips: Frequent trips are defined as the same destinations entered in 
+reimbursement requests submitted at least three times. These will now appear 
+at the top of the mileage reimbursement draft during the submission process. 
+Employees can use a checkbox to indicate whether the trip is a round trip. 
+Previously used locations will automatically display when users begin typing.
+Submit ting r eimbursement s
+6
+Waiting for reimbursement approval
+Once you submit a reimbursement, it will be routed to either your direct manager 
+or admins for approval or a combination of reviewers for approval, based on the 
+Expenses approval setup. 
+Reimbursement expenses will by default follow the Default approvals flow.
+To use a different Expenses policy for reimbursement requests, the submitter must 
+choose an existing fund linked to the desired policy in the "Reimburse from" field 
+on the form.
+If your reimbursement is approved, it can be approved for electronic payment 
+on Ramp or with another method your finance team chooses off Ramp. More 
+in the "Getting paid back on or off Ramp" section.
+   Approved reimbursements cannot be edited.
+If a reimbursement is rejected, you can edit it and re-submit it.
+Submit ting r eimbursement s
+7
+Editing a reimbursement after submitting it: While your reimbursement is 
+pending, you and your manager / bookkeeper / admin may edit any 
+reimbursement field. When reimbursement fields are edited after the 1st level of 
+approvals has been made, at the 2nd layer of approvals, the approval chain may 
+reset.
+Below is the logic by which the approval chain resets if a reimbursement is edited:
+ When you edit any part of your reimbursement, the approval chain will always 
+reset to the first approver.
+ If any other reviewers (managers and admins) edit the reimbursement level at 
+the 2nd approval level...
+    The chain resets when these fields are edited: Amount, currency, spend limit, 
+trip, and/or mileage.
+    The chain will not reset when these fields are edited: Date, merchant, memo, 
+additional fields.
+Getting paid back on or off Ramp
+You may get paid back in one of two ways depending on your finance team's 
+preference.
+Electronic payment to your bank account
+Paid off the Ramp platform
+For payments on Ramp
+Once approved, you will receive funds directly into your bank account. The 
+payment process after the final approval typically takes 35 business days.
+Submit ting r eimbursement s
+8
+After a reimbursement has been approved and before the payment begins 
+processing, admins, and owners can cancel your reimbursement payment from 
+the reimbursement drawer in case of mistakes in approval, payment method, or 
+bank issues. This will both cancel and reject the reimbursement. If you believe this 
+was done in error, you can duplicate and resubmit the reimbursement and let your 
+manager and/or finance team know. 
+For payments off Ramp
+If your company hasn't enabled payments via Ramp, your company will pay you 
+outside of the Ramp platform with different methods such as Zelle, Venmo, check, 
+etc. Please contact your manager or company administrators with questions about 
+payments outside of Ramp.
+Bulk submitting reimbursements
+To upload receipts in bulk via the web (up to 20 at a time), drag and drop multiple 
+receipts into the upload section. To edit the same fields for multiple receipts:
+ Navigate to My Expenses > Reimbursements
+ Check the boxes on the left-hand side of the reimbursements you want to bulk 
+edit
+ Click Edit on the bottom of the page
+ Select the field you want to bulk edit (e.g. memo, accounting fields, trip) 
+ Enter the relevant information and click the green "Edit" button to save
+Submit ting r eimbursement s
+9
+(Plus only) Bulk submitting via expense groups  
+Multiple receipts may be submitted together, and our AI will quickly generate draft 
+reimbursements. You can edit multiple reimbursements with the same context 
+(e.g. for a trip or for a specific time period), add the relevant information, and bulk 
+submit them as a group. Your reviewers will then be alerted that an expense group 
+is ready for their review.
+ Navigate to Home  
+ Click New  Reimbursement and select (or drag and drop) up to 20 receipts, 
+or click into your receipt drafts if they're already created  
+ Ramp will automatically group your receipts drafts to submit all at once.  
+ Once all reimbursement drafts in the group have the required information, 
+name the group (e.g., “Trip to San Franciscoˮ) before submitting for review.  
+ You can click any draft on the left-hand side to drag and drop them into and 
+out of the groups.  
+ Fill out the relevant fields for each reimbursement draft. Drafts labels will 
+change from "Incomplete" to "Complete" once required sections are filled 
+out.)
+Submit ting r eimbursement s
+10
+(Plus only) Missing employee reimbursement 
+permissions?
+If you are in the Employee role and your business is on Ramp Plus, you might not 
+see the ability to submit reimbursements. That is because your business Owner or 
+Admin may have removed this permission from the Employee role capabilities. You 
+can contact them for more information, and refer to this article for more 
+information on role permissions.
+Submit ting r eimbursement s
+11

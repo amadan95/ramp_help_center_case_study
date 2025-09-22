@@ -1,0 +1,70 @@
+Faster Payments
+Verification Verified
+Owner 2 G Gumloop
+Help Center
+URL
+https://support.ramp.com/hc/en-
+us/articles/38708240013843Faster-Payments
+Tags
+Last edited at: 20250523T200124Z  
+Help Center URL https://support.ramp.com/hc/en-us/articles/38708240013843
+Faster-Payments  
+Overview
+Faster Payments is an optional feature designed to help you get paid more quickly 
+for invoices processed through Ramp Bill Pay. Instead of waiting days for a 
+standard ACH transfer, you can opt in to receive payment as fast as the same day 
+—minus a small 1% fee— so you can access your cash sooner. 
+Why Use Faster Payments?
+Boost Your Cash Flows: get your money sooner so you can reinvest or cover 
+expenses without delay.  
+Reduce Payment Processing Anxiety: Faster Payments can help you avoid 
+the typical waiting period for standard ACH transfers.  
+Easy One-Click Acceptance: opt in through a simple link in your email or via 
+the Vendor Portal. No complicated setup or additional documentation needed.  
+F ast er Pa yment s
+1
+How It Works
+Payment Initiation
+Your customer schedules a payment through Ramp Bill Pay. Normally, this 
+payment would arrive via a standard ACH transfer in about 35 business days.
+Faster Payment Offer
+If your payment is eligible, youʼll receive the offer in an email or see the offer in 
+your Vendor Portal (if you have an account) in your invoice details. Not all 
+payments are eligible and offers are not guaranteed.
+F ast er Pa yment s
+2
+Accepting the Offer
+Click the link in the email or use the button in the Vendor Portal to confirm your 
+payment date and that you want to accept Faster Payments. Please also confirm 
+the destination account bank details where the payment will be deposited. 
+F ast er Pa yment s
+3
+You do not need a Vendor Portal account to accept the offer; you can accept it 
+directly from the email. However, having an account offers additional visibility 
+into your payment statuses and simplifies future Faster Payments.  
+Offer timeline: If you accept the offer after 4PM ET, your payment may arrive 
+the next business day. This ensures we have enough time to process the 
+same-day ACH in the appropriate window.   
+Offer expiration: The offer typically expires once the faster payment has been 
+initiated (usually about 48 hours from when the payment is scheduled). After 
+that window, your payment will continue under the normal ACH schedule.  
+F ast er Pa yment s
+4
+Bank details: Youʼll have a chance to review your account information when 
+you accept the Faster Payments offer. If thereʼs an issue after youʼve 
+confirmed, please contact our Support Team immediately for assistance.  
+Transfer
+After accepting the offer, Ramp changes the payment to same-day ACH for faster 
+delivery. Funds will then land in your bank account on the date specified on your 
+offer page (minus a 1% fee).
+If you accept after 4 PM ET, your payment may arrive the next business day.
+Once your payment is processing, you'll see a Payment initiated status in your 
+Vendor Portal account. This status will change to Paid once the payment is 
+complete and made to your payment account.
+Your customer will be able to see that the payment was delivered earlier than 
+scheduled, but not that you elected to use Faster Payments. 
+How much does Faster Payments cost
+We charge a 1% fee, which is deducted from the final payment amount. There are 
+no other hidden charges.
+F ast er Pa yment s
+5

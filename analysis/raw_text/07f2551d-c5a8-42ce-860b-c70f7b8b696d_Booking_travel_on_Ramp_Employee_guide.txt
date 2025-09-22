@@ -1,0 +1,306 @@
+Booking travel on Ramp: 
+Employee guide
+V er ific ation Verified
+Owner 2 G Gumloop
+Help 
+Cent er URL 
+https://support.ramp.com/hc/en-us/articles/28991294745491
+Booking-travel-on-Ramp-Employee-guide
+T ags 
+Last edited at: 20250716T224139Z  
+Help Center URL Booking travel on Ramp  Employee guide
+Want to book a trip using Ramp Travel? You're in the right place!  
+Want to book travel using Ramp funds and another travel platform? Read more 
+[here](https://support.ramp.com/hc/en-us/articles/28991373763091.
+Overview
+We're excited to introduce Ramp Travel, your streamlined solution for business 
+travel. With Ramp Travel, booking flights and hotels is easy. You can search for 
+flights and hotels directly within Ramp and know exactly which options are within 
+your company's policy. After booking with Ramp Travel, there's no need to hassle 
+with receipt submissions. Everything is seamlessly managed on the same spend 
+management platform. You can also easily track and manage all your bookings 
+and trips within the Travel tab.
+Jump to:
+Booking tra v el on R amp: Emplo y ee guide
+1
+Overview  
+How it works  
+Booking flights  
+Booking hotels  
+Booking cars  
+Submitting travel requests for approval  
+How do I cancel my booking?  
+How do I modify my booking?  
+   For flights  
+   For hotels  
+How do I retrieve my booking details?  
+Mid-trip disruptions and emergency situations  
+   Flights  
+   Hotels  
+Frequently Asked Questions FAQs)
+How it works
+Booking Travel on Ramp is easy. Navigate to "Home" on your left-hand panel and 
+select the "My Trips" tab. You can search for flights and hotels, as well as access 
+any previous or upcoming booking(s) or trip(s) on both your desktop and mobile 
+devices.
+🔗  Check out how to book on Ramp Travel with this video.
+Booking tra v el on R amp: Emplo y ee guide
+2
+Note that you will not be able to see this tab unless your admin has enabled this 
+function for their employees. See here for more details on booking travel off-ramp.
+Booking flights 
+Follow the steps below to book your desired flights:
+ Enter your travel details: On the My Trips page, enter your departure city or 
+airport, destination city or airport, departure date, and return date (if it's a 
+round trip), and click on the "Search flights" button.  
+   !Screenshot 20250620 at 1.42.48 PM.png
+2. Review search results: Ramp will display a list of available flights based on 
+your criteria and you can filter by price, airline, departure time, policy etc. Evaluate 
+options and select a flight that meets your company's travel policy. The icon next 
+to the price indicates whether a flight is within your travel policy. If a flight is 
+flagged as out of policy, toggle on the price to learn why. If you believe a flight 
+outside the policy is justified, ensure you have the necessary approvals before 
+booking.
+3. Review fare options: Some flights may offer different fare options, such as 
+basic economy, economy, or business class with different cancellation policies 
+and perks. Review these options carefully to see what's included. The icon next to 
+the price indicates policy compliance on the top right. Once you're ready, click 
+"Continue to checkout".
+4. Enter traveler information: After selecting your flight, enter your passenger 
+information. You'll only need to enter your information once since Ramp saves the 
+data for easier checkout in the future.
+Booking tra v el on R amp: Emplo y ee guide
+3
+5. Select trip and funds:  Select the corresponding trip if you have already 
+created one, or create a new trip to manage expenses easily. Then, select the 
+correct funds.
+   !travel confirmation - trip + card selection.jpg
+6. Review and confirm: Before completing your booking, review all the details, 
+including the flight itinerary, passenger information, fare options, and cancellation 
+policy. Make sure everything is correct, as some bookings may be non-refundable 
+and most flights do not allow cancellation after 24 hours of booking.
+7. Complete booking: Once you're ready, click on the "Book flight" button to 
+finalize your reservation. If the booking is successful, you will receive a 
+confirmation email shortly afterward with all the details of your booking.
+8. View your booking (optional): After booking your flight, you can navigate to the 
+"Travel" tab on Ramp's website to view your booking itinerary, cancel your flight 
+(if it is within the cancellation period), or resend your confirmation email. 
+To add extras such as travel insurance, paid pieces of baggage, as well as online 
+check-in, please log into the airline app or website and manage your booking from 
+there.
+Booking hotels 
+Follow the steps below to book your desired hotel:
+Booking tra v el on R amp: Emplo y ee guide
+4
+ Enter your travel details: On the My Trips page, toggle to "Hotels" and enter 
+your destination city or area, check-in date, and check-out date. Click on the 
+"Search hotels" button.   
+   !Screenshot 20250620 at 1.44.17 PM.png
+2. Review search results: Ramp will display a list of available hotels based on your 
+criteria and you can filter by hotel class, price, policy, etc. Evaluate options and 
+select a hotel that meets your company's travel policy. The red icon next to the 
+price/night indicates whether a hotel is out of policy, you can toggle on the icon to 
+learn why. If you believe a hotel outside the policy is justified, ensure you have the 
+necessary approvals before booking.
+3. Review hotel and different room options: Click "Select" on the hotel you're 
+interested in to access more information and choose between the different room 
+options. Different room types may offer different cancellation policies and perks. 
+Review these options carefully to see what's included. The icon next to the price 
+indicates policy compliance. Once you've decided, click "Select".
+4. Enter traveler information: Enter your personal information. You'll only need to 
+enter your information once since Ramp saves the data for easier checkout in the 
+future.  
+For adding/linking your loyalty program, please contact the hotel directly (a phone 
+number will be provided on the booking confirmation page).
+5. Select trip and funds:  Select the corresponding trip if you have already 
+created one, or create a new trip to manage expenses easily. Then, select the 
+correct funds.
+Booking tra v el on R amp: Emplo y ee guide
+5
+6. Review and confirm: Before completing your booking, review all the details, 
+including the hotel details, personal information, refunds, and cancellation policy. 
+Make sure everything is correct, as some bookings may be non-refundable.
+7. Complete booking: Once you're ready, click on the "Book hotel" button to 
+finalize your reservation. If the booking is successful, you will receive a 
+confirmation email shortly afterward with all the details of your booking.
+8. View your booking (optional): After booking your flight, you can navigate to the 
+"Travel" tab on Ramp's website to view your booking details, cancel your hotel (if 
+it is within the cancellation period), or resend your confirmation email. 
+Booking Cars
+Follow these steps to book your desired car rental on Ramp:
+ Enter Your Travel Details:  
+On the My Trips page, toggle to "Cars" and input your pick-up location, drop-off 
+location, pick-up date, and drop-off date. Then click on the "Search cars" button.  
+   !Screenshot 20250620 at 1.46.06 PM.png
+2. Review Search Results:  
+Ramp will display a list of available car rentals based on your criteria. You can 
+filter by car type, price, policy compliance, and more. Evaluate your options and 
+select a car that meets your company's travel policy. A red icon next to the rate 
+will indicate if a car rental is out of policy—click the icon to see the details. If you 
+need to book a car outside of policy, ensure you have the necessary approvals 
+before proceeding.
+Booking tra v el on R amp: Emplo y ee guide
+6
+3. Review Car Details and Options:  
+Confirm that the rental aligns with your requirements and policy compliance. Once 
+satisfied, click "Select" to proceed.
+4. Enter Traveler Information:  
+Fill in your personal details. Ramp saves your information for future bookings, so 
+you'll only need to enter it once.
+5. Select Trip and Funds:  
+Choose the corresponding trip if you have already created one, or create a new 
+trip to help manage your expenses. Then, select the appropriate funds for the 
+expense.
+6. Review and Confirm:  
+Before finalizing your booking, review all the details, including the car rental 
+information, personal details, refund policies, and cancellation terms. Ensure that 
+everything is correct, especially since some bookings may be non-refundable.
+7. Complete Booking:  
+Once you're ready, click on the "Book car" button to finalize your reservation. If 
+the booking is successful, you'll receive a confirmation email shortly afterward 
+with all the details of your rental.
+8. View Your Booking Optional):  
+After booking your car, you can navigate to the "Travel" tab on Ramp's website to 
+view your booking details, cancel your rental (if within the allowed cancellation 
+period), or resend your confirmation email.
+Booking tra v el on R amp: Emplo y ee guide
+7
+This step-by-step process ensures that you get the best corporate rates and 
+maintain compliance with your company's travel policies—all while enjoying the 
+ease of managing your travel in one place with Ramp.
+Submitting travel requests for approval
+Depending on your company's travel policy, some travel bookings may require 
+manager or admin approval before you can complete your booking on Ramp.
+ Book your travel: Select your flight or hotel as usual.  
+ Submit for approval: At the end of the checkout flow, click the "Submit 
+Request" button.  
+ Notification: Your manager or admin will be notified of your request.  
+ Approval: Upon approval, the booking will be processed, and you will receive 
+a confirmation email.
+Please note that the price of the booking may change, and the request will reflect 
+the latest price. You can track the status of your travel request by navigating to My 
+Home  My Trips  Requests.
+How do I cancel my booking?
+If your booking is within the cancellation period, you can cancel on Ramp's 
+website. Go to "Travel" under "My Ramp" and select the booking you want to 
+cancel. Scroll down and click "Cancel reservation". 
+Booking tra v el on R amp: Emplo y ee guide
+8
+If your booking has passed the cancellation period, you may see a chat option 
+which you can use to contact our provider in order to make updates.
+   The booking details page contains the trip ID you'll need to provide. Note that 
+you will not be able to cancel your booking from Ramp's website and the Ramp 
+Support team won't be able to assist with cancellation. 
+If your booking is within 24 hours of the scheduled flight or hotel stay, contact 
+the airline or hotel directly. 
+How do I modify my booking? 
+For flights
+If you need to modify travel dates, flight fare class, or hotel room type, please 
+check your booking's modification and cancellation policy:  
+Booking tra v el on R amp: Emplo y ee guide
+9
+The best first course of action is to go to "Travel" under "My Ramp" and select 
+the booking you want to modify or cancel. In this page you may be able to 
+cancel your flight directly, or see a chat widget which you can use to contact 
+our provider to make any intended modifications.
+If your booking is within 24 hours of the scheduled flight or hotel stay, contact 
+the airline directly. 
+For hotels
+If you are extending your hotel stay, make a new booking via Ramp Travel 
+portal and call the hotel to combine the 2 reservations. 
+If you are shortening your hotel stay or modifying travel dates:
+   If your booking is refundable, you could cancel your booking and rebook with 
+Ramp Travel. It may take a few minutes for the refund to reach your funds. 
+Otherwise, you can also contact Priceline at 1 800 6579168 directly.
+   If your booking is NOT refundable, contact Priceline at 1 800 6579168 
+directly.
+For cars
+For post-paid car modifications the best approach is to book a new car rental 
+and cancel your original for a full refund.
+For pre-paid car modifications, contact Priceline at 1 800 6579168 directly.
+How do I retrieve my booking details?
+Booking tra v el on R amp: Emplo y ee guide
+10
+Go to the "My Trips" tab under "Home" and select the desired booking. Click 
+"Resend email" to resend the flight or hotel confirmation email.
+Mid-trip disruptions and emergency situations
+Flights
+In the event of mid-trip disruptions or emergency situations such as delay, 
+disruption, or cancellation within 24 hours of your flight, contact the airline or 
+hotel directly for immediate assistance. The contact details of the airline or hotel 
+can be found on the booking details page under the "Travel" tab of "My Ramp". 
+Otherwise utilize the chat widget that can be found on this page.
+Hotels
+To get help with your booking, go to your booking details page and select the 
+option to contact Duffel or Priceline for support. You can also reach Priceline 
+directly at 1 800 6579168.
+Delegate Booking 
+Assistants can book business travel on behalf of other employees. After someone 
+is assigned as an assistant, they can book and manage travel directly for the 
+traveler, with personal details and travel policies auto-filled and applied, making 
+the booking process much faster and more efficient.
+Booking tra v el on R amp: Emplo y ee guide
+11
+To learn more about setting up an assistant and how to use this feature, visit 
+Travel Delegate Booking via Assistant Role.
+Please note: this feature is currently only available to businesses that have 
+enabled Ramp Travel for all employees.
+Frequently Asked Questions (FAQs)
+What happens to the approval if the flight/hotel room is no longer 
+available before the manager approves?  
+  The booking fails, users receive an email asking them to rebook.
+Iʼm not sure if my booking went through—what should I do?  
+  Sometimes confirming a booking can take a little longer than expected. Once it's 
+confirmed or failed, weʼll send an update to your work email. If you see a charge 
+on your card for the booking amount, that usually means it was successful—you 
+should receive a confirmation email within 10 minutes.
+I didn't receive my confirmation email; how can I get my booking details?  
+  You can resend your itinerary by navigating to My Ramp  Travel, selecting the 
+desired booking to open up the booking details page, and clicking the "Resend 
+email" button. Feel free to reach out to Ramp support at any time as well.
+Can I make a booking on behalf of a team member?  
+  Yes, after the traveler assigns you as their Assistant, you can book and manage 
+travel on their behalf. See more details here.
+Can I coordinate group trips and make a group booking?  
+Booking tra v el on R amp: Emplo y ee guide
+12
+  As of today, you will not be able to coordinate group trips or book multiple flights 
+or rooms in one go, but we expect to support this functionality in 2025.
+Why do I not see any Southwest flights available?  
+  Currently, we do not support Southwest Airlines' inventory as they tend not to 
+partner with online travel agencies for marketing or ticket sales. We are working 
+on unlocking this in early 2025.
+Can I redeem flights or hotels with points?  
+  Whilst users can add in their frequent flyer information to accrue points for flights 
+only, they cannot use points to purchase flight or hotel bookings.
+How do rewards or loyalty programs function for flights and hotels?  
+   For flights, you can enter your Known Traveler Number or membership detail on 
+the confirmation page or in your Traveler profile My Ramp  Travel  Traveler 
+Profile) while you are booking your flight. If you are not able to add this on Ramp, 
+you can also add it on the airline's website directly after you book!    
+   For hotels, because we are getting discounted fares for hotels, we cannot 
+guarantee rewards will work with hotels. However, many users have had success 
+applying rewards or loyalty benefits by calling the hotels directly or applying 
+rewards upon hotel check-in.
+What is the process for booking multi-city trips?  
+  Currently, we do not support multi-city trips. The best way is to book multiple 
+one-way flights.
+Do negotiated rates with specific hotels appear on Ramp?  
+  Our rates are powered by Priceline. Ramp does not offer negotiated rates beyond 
+Priceline's standard rates with no booking fee. However, we have an agreement 
+with Priceline to help our customers save on travel costs. You should find that total 
+Booking tra v el on R amp: Emplo y ee guide
+13
+pricing on Ramp is lower than standard publicly available rates. If you do run into 
+cases where the same inventory is cheaper elsewhere, we would be happy to 
+investigate. 
+Can I book a car rental via Ramp?  
+  We are building this; stay tuned!
+How can I set up or edit my Traveler Profile?  
+  Go to My Ramp  Travel tab, and click "Traveler profile" on the left-hand side to 
+add or edit your information.
+Our team is working hard to build and unlock further features to better support 
+you and your team, and we would love to hear from you! If you have any feedback, 
+please complete this survey.
+Booking tra v el on R amp: Emplo y ee guide
+14

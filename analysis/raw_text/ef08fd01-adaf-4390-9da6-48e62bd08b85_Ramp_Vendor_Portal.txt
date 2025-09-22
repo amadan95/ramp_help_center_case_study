@@ -1,0 +1,127 @@
+Ramp Vendor Portal
+V er ific ation Verified
+Owner 2 G Gumloop
+Help Cent er 
+URL 
+https://support.ramp.com/hc/en-us/articles/8324890039571
+Ramp-Vendor-Portal
+T ags 
+Last edited at: 20250708T173810Z  
+Help Center URL Ramp Vendor Portal
+Overview
+Ramp's Vendor Portal allows vendors who receive bill payments to easily manage 
+and track those payments. The Vendor Portal:
+  Simplifies payment tracking for vendors.  
+  Provides a central location for managing receivables.  
+  Allows for quick and secure updates to company and payment information.  
+  Lets vendors comment directly with payers on bills  
+If you're using this guide, it means one of your customers is using Ramp to 
+process accounts payable and send vendor payments. 
+Vendor Portal Process
+R amp V endor P or t al
+1
+Optional Vendor Account Creation:
+You have the option to create a vendor portal account to manage and track 
+your payments, and get access to the additional features described below.   
+Creating an account is *optional* and not required to receive payments.  
+Bill Payment Initiated:
+When a company wants to pay you for a service or product, they can select 
+you as the vendor on a bill and either:  
+   Request payment and tax details from you You will receive an email at the 
+address your customer entered in Ramp. Once submitting your details, you'll have 
+the option to create a Vendor Portal account and join Ramp's Vendor Network)  
+   Manually enter your payment and tax details  
+   Connect with you on the vendor network to get your details.  
+You will receive an email notification about the incoming payment, from which 
+you create a Vendor Portal account to view more details in Ramp.
+R amp V endor P or t al
+2
+Tracking Payments:
+Once your account is created, you can view pending bill payments and track 
+their progress.
+R amp V endor P or t al
+3
+Additional bills paid to you by other companies using Ramp will also appear in 
+the portal.  
+   FYI that 'Payment destination' only populates after payment is initiated, not 
+before.
+R amp V endor P or t al
+4
+Managing your Vendor Portal account 
+Setup guide
+After signing up, you will see a setup guide with the remaining steps to complete 
+setting up your account.
+R amp V endor P or t al
+5
+Company Profile
+Customize how your company is shown to customers and what details you share. 
+#### Manage Payment Details
+Go to 'Company profile' > 'Payment details' to access your payment accounts. 
+You can add multiple bank accounts to receive payments, and also select 
+which payment details are shared with specific customers. To add an 
+R amp V endor P or t al
+6
+additional payment account, click 'Add account' > enter your account details.  
+   You can assign multiple bank accounts to one customer, but only one of each 
+type (i.e. one ACH, one International)  
+For international wire details, in the portal you can only add USD details 
+SWIFT bank account)  
+You can only have one public bank account that will be shared with customers 
+upon connection  
+To share specific payment account details with a specific customer, click on 
+the payment details > 'Share with customers' >  select the customer  Save  
+Confirm & enter code.  
+   You will then be able to see if the customer has 'Accepted' the payment details, 
+or whether this update is 'Pending' or they have 'Rejected' these new details.  
+   If the status is 'Rejected' you can re-send payment details by clicking the 
+'Resend' arrow.
+R amp V endor P or t al
+7
+Note: a customer will need to accept any payment detail updates (payment 
+account, mailing address, card acceptance policy) before these new changes 
+take effect for their payments.
+R amp V endor P or t al
+8
+#### Manage Tax Details
+Go to 'Company profile' > 'Tax details' to access your tax details.  
+To add your W9 or W8 details > 'Edit tax details' > upload the document or 
+manually add the details  
+   In order to add W8 details, 'Federal Tax Classification' must be 'International'.  
+Note: a customer will need to accept your tax detail updates before these new 
+changes take effect.
+R amp V endor P or t al
+9
+#### Discoverability
+Enabling discoverability allows customers to connect with you on Ramp's 
+vendor network and easily get your payment/tax details 
+Invite people to your Vendor Portal account
+You can invite multiple users to have access your Vendor Portal account.
+To invite others, click on 'People' in navigation > 'Invite People' button at the 
+top right.  
+Enter the email addresses of the people you would like to invite. An email 
+invite to join your Vendor Portal will be sent to this account. Then click 'Send 
+Invite'.  
+   Invitees must match your email domain for the invite to go through (unless 
+you're a multi-entitled business using Ramp for spend, AP, etc.)  
+To check the status of sent invites, click 'Pending Invites' where you can 
+either 'Resend' or 'Revoke' a sent invitation.
+R amp V endor P or t al
+10
+Frequently Asked Questions (FAQs)
+  Do I need to create an account to receive payments?  
+     No, creating an account is optional. It is a tool to help you keep track of 
+receivables.  
+2.  How will I be notified of an incoming payment?  
+     You will receive an email notification whenever a company sends you a 
+payment.  
+3.  I signed up, but how do I access this later as a vendor?  
+     Enter your email here to log into your existing vendor portal account.  
+4.  Can I update my bank account details?  
+     Yes, you can update your bank account details through the 'Update Company 
+Profile' button in the Vendor Portal. Note that only one bank account can be 
+selected as the default at a time.  
+5.  Can I track payments from multiple companies using Ramp?  
+     Yes, all payments made by any company using Ramp will be available to track 
+in your Vendor Portal.
+R amp V endor P or t al
+11

@@ -1,0 +1,308 @@
+Bill payment methods and 
+timelines
+V er ific ation Verified
+Owner 2 G Gumloop
+Help Cent er 
+URL 
+https://support.ramp.com/hc/en-us/articles/4417836454419
+Bill-payment-methods-and-timelines
+T ags 
+Last edited at: 20250624T170034Z  
+Help Center URL Bill payment methods and timelines
+Overview
+As the fastest bill payment product on the market, Bill Pay offers a variety of 
+payment methods that ensure your vendors are paid fully and on time. You can 
+also pay your bills with the assurance that we'll notify you if it looks like you're 
+paying a duplicate bill.
+Please note: All Ramp bill payments—whether by check, ACH, or card—are free to 
+use. There are no processing fees.
+Jump to:
+Paying by card
+Paying by ACH
+   Regular delivery
+Bill p a yment methods and timelines
+1
+   Same-day delivery
+Paying by domestic wire
+Paying by check
+Paying by international wire USD
+Paying cross-border
+Paying outside of Ramp
+Payment notifications
+Receipts and Remittance Advice
+Paying by card
+Ramp Bill Pay lets you pay your bills using both your existing cards and Single-use 
+Ramp cards. If your vendor accepts Visa cards, this is a great way to earn 
+cashback.
+Learn more about paying your bills via Ramp card here.
+Paying by ACH
+With Bill Pay, ACH payments to your vendors have never been easier or faster. 
+Here's more information to help you make ACH payments.
+Regular Delivery:
+Payment timeline:
+Bill p a yment methods and timelines
+2
+Regular ACH payments take 2 or 5 business days, depending on Bill Pay usage to 
+date and information about your limit and connected bank accounts. However, 
+Ramp has made ACH payments even faster with same-day delivery on eligible 
+bills. Jump to Same-Day ACH to learn more. 
+Maximum payment: When paying by ACH, no maximum amount is required.  
+Bill Pay dates explained:
+Due date: the date that the vendor expects the payment to arrive  
+Payment date: the date the payment leaves your account  
+Estimated arrival: the date the payment will be delivered to the vendor  
+When bills are marked as paid:
+Bill payments via ACH will be marked as paid in your connected accounting 
+provider once Ramp withdraws (debits) funds from your connected account 
+(debits). The bill payment will be marked as paid in Ramp once the bill payment 
+funds have been credited and received by your vendor. See more information 
+about Bill Pay Accounting: Bill Pay Accounting
+What do ACH payments look like in my bank statement:
+As a Ramp customer, your bank statement will show " Vendor Name }} Invoice 
+Number  BILL PAY". Your vendor's bank statement will show " Business Name 
+}}  Invoice Number  BILL PAY".
+Bill p a yment methods and timelines
+3
+For example, if your company is Cafe Kramer and you are paying invoice 018 to 
+Jerry Donuts, your payment to the vendor will show as "JERRY DONUTS 018 BILL 
+PAY". Jerry Donuts will see this on their bank statement for the same payment: 
+"CAFE KRAMER 018 BILL PAY".
+Same-day delivery
+Ramp allows customers to process payments more efficiently and quickly by 
+offering same-day delivery for eligible ACH bill payments. To enjoy unlimited, free 
+same-day ACH payments with the confidence that your vendors receive funds the 
+day you send them, select "Business Account" under "Pay from account". If you 
+donʼt have a Ramp Business Account yet, you can sign up here.
+On eligible bills, you will see a drop-down on the ACH Delivery time that will allow 
+you to select Same-Day delivery for a $10.00 flat fee. Bills with same-delivery that 
+are fully approved by 400 PM EST on the scheduled date will remit funds to 
+vendors within the same business day.
+Bill p a yment methods and timelines
+4
+Same-Day Delivery Eligibility
+Please note that if a bill is recurring, same-day delivery will not be available within 
+the drop-down. Additionally, if your business or bill falls into one of these 
+categories, your bill may not be eligible for same-day delivery.
+New to Ramp: Same-day delivery will become available to your business after 
+a few successful bill payments are made on Ramp.  
+Outstanding Balances: If you have any outstanding balances owed to Ramp 
+for statement payments in the last 60 days, same-day delivery will not be 
+available for your bill payments.  
+Bill p a yment methods and timelines
+5
+Vendor Bank: Certain receiving banks are considered higher risk; thus, Ramp 
+cannot offer same-day delivery to these banks to reduce risk and potential 
+fraud. Also, even if a bank is eligible, we cannot guarantee that the bank will 
+make the funds available on the date of payment transmission.  
+High Bill Amount: To ensure secure payment delivery, Ramp does not offer 
+same-day delivery for higher bill amounts.
+Paying by domestic wire 
+Ramp enables you to pay vendors using domestic wire transfers through FedWire, 
+offering a secure and efficient way to quickly transfer large transaction amounts to 
+vendors within the United States. The maximum amount allowed for domestic wire 
+transfers is $10 million per transaction.
+Payment timeline
+You will have the option to pay with domestic wire for a $15.00 flat fee. Ramp will 
+withdraw funds via an ACH debit from your connected bank account on the 
+scheduled date.
+Payments can take between 05 business days.  
+Bills that are fully approved before 100 PM EST on the scheduled date will be 
+sent to vendors within the same business day.  
+Same-day domestic wire eligibility
+Same-day domestic wire may not be available due to the following categories:  
+Bill p a yment methods and timelines
+6
+High Bill Amount: To ensure secure payment delivery, Ramp does not offer 
+same-day domestic wire delivery for higher bill amounts.  
+Outstanding Balances: If you have any outstanding balances owed to Ramp, 
+same-day domestic wire may not be available for your bill payment.
+When are bills marked as paid:
+Bill payments via wire will be marked as paid in your connected accounting 
+provider once Ramp withdraws (debits) funds from your connected account which 
+may take 1 business day. The bill payment will be marked as paid in Ramp once 
+the bill payment funds have been credited and received by your vendor. 
+Paying by check
+Bill Pay lets you pay your US-based vendors with a check.  Here's helpful 
+information to know when making check payments
+Payment timeline:
+Ramp will withdraw funds via an ACH debit from your connected bank account on 
+the scheduled date which can take 25 business days to process. Once Ramp 
+receives these funds, we will issue and deliver a paper check to your vendor 
+within 47 business days. If a check is not cashed within 180 days of issuance, 
+Ramp will automatically void it.
+What's printed on the checks:
+Bill p a yment methods and timelines
+7
+Ramp checks will be printed with the bill amount, the name of the business 
+paying, and a check memo pulled from the Vendor Memo field in the Ramp bill. 
+The following will be printed under the signature: "Ramp Business Corp., as 
+agent."
+Check envelopes will include the vendor's name and address, and display your 
+business address as the return address.
+Delivering Ramp checks:
+Our checks take about 47 business days to reach your vendor, and if you 
+schedule a payment for a date beyond six business days, we will ensure it reaches 
+the vendor on time. If you schedule a check payment on a non-business day 
+(holiday or weekend), we will send it on the following business day.
+Note: Ramp relies on USPS for physical check delivery. While most checks arrive 
+as expected, delivery cannot be guaranteed 100% of the time.
+If a check's payment status shows as 'Delivered' but the vendor hasn't received it, 
+you can cancel and resend the payment by following these steps:
+ Go to the Bill Pay section in Ramp.  
+ Locate the check payment you want to cancel.  
+ Click the three vertical dots or open the Bill Actions tab.  
+ Select Cancel Payment.  
+ Confirm the cancellation.  
+Once canceled, you can reinitiate the payment:
+Bill p a yment methods and timelines
+8
+Using the same method (check), or  
+Choosing an alternate method (e.g., ACH, wire transfer).  
+Confirming a check payment was successful:
+We do our best to ensure every check payment reaches its intended destination. 
+Once checks are deposited, they are moved from the "Payments" tab to the "Paid" 
+tab within Ramp Bill Pay.  
+Cancelling a check:
+You can cancel issued check payments directly in Ramp if your vendor has not 
+deposited the check. Log in to Ramp, go to the Bill Pay tab, locate the bill 
+payment, click the three-dot icon to the far right, and select Cancel payment. 
+Marking check bills as paid:
+Ramp will mark a bill as paid within your accounting provider once the funds have 
+been withdrawn from your bank account. Check payments will be marked as paid 
+on Ramp when your vendor cashes the check.
+Bill p a yment methods and timelines
+9
+Paying by international wire (USD)
+You can now pay your international vendors in USD on Ramp. 
+When setting up a new vendor on Ramp, simply enter the country to which you are 
+paying your vendor. Afterward, you'll be able to either enter your vendor's SWIFT 
+and IBAN (or IBAN equivalent) codes or request that information from your vendor 
+on Ramp.
+Payment timelines:
+Ramp will first ACH debit your connected account for the required funds in USD, 
+which may take 14 business days. Then, Ramp will wire the payment to your 
+vendor, which can take up to an additional 15 business days. 
+Bill p a yment methods and timelines
+10
+When are bills marked as paid:
+Bill payments via wire will be marked as paid in your connected accounting 
+provider once Ramp withdraws (debits) funds from your connected account. The 
+bill payment will be marked as paid in Ramp once the bill payment funds have 
+been credited and received by your vendor. 
+Paying cross-border (FX)
+You can now pay your international vendors in foreign currency on Ramp. 
+Similar to international payments in USD above, when setting up a new vendor on 
+Ramp, simply enter the country to which you are paying your vendor. Afterward, 
+you'll be able to enter your vendor's international banking details within Ramp.
+Payment timelines:
+Ramp will first ACH debit your connected account for the required funds in USD, 
+which may take 14 business days. Then, Ramp will convert the debited funds 
+using competitive exchange rates and deliver the payment to your vendor in their 
+local currency, which can take up to an additional 15 business days. 
+When are bills marked as paid:
+FX Bill payments will be marked as paid in your connected accounting provider 
+once Ramp withdraws (debits) funds from your connected account. The bill 
+Bill p a yment methods and timelines
+11
+payment will be marked as paid in Ramp once the bill payment funds have been 
+credited and received by your vendor. 
+Paying outside of Ramp
+If a bill needs to be paid with a payment method outside of Ramp, you may select 
+your payment type as "I won't pay this with Ramp."
+If this payment method is selected, your bill will still be routed through the 
+approval chain. However, once payment is completed, you will need to come back 
+to Ramp and manually mark the bill as paid. Additionally, while Ramp can sync the 
+open bill to the accounting provider, since the bill is paid outside of Ramp, the bill 
+payment cannot be auto-synced to the accounting provider. 
+Payment notifications
+Paying fast doesn't mean paying in the dark. Bill Pay notifies employees of the 
+correct information through email and Slack. You can always see the status of 
+your bills in any of the Bills pages.
+Email (only to AP Clerks and Admins if they created the bill)
+The payment was failed, returned, or changed
+Slack (business alerts channel)
+Payment was sent  
+Bill p a yment methods and timelines
+12
+The payment was failed, returned, or changed  
+For more information about vendor notifications, read here: Bill Pay Vendors and 
+Vendor Owners
+Receipts and Remittance Advice
+Ramp makes it easy to track vendor payments by tracking receipts alongside your 
+bills. Receipts are an easy way to help locate payments and provide vendors with 
+confirmation that a payment has been completed.
+Downloading Receipts
+You can download the receipt as a PDF to save for your own records or to send to 
+vendors directly. 
+ To get started, navigate to the Bill Pay tab on Ramp  
+ Click on History to locate the desired bill  
+ In History, you have the option to download the receipt under the Actions 
+column  
+Bill p a yment methods and timelines
+13
+Receipt Details
+The receipt PDF contains the following:
+Business Name and Vendor Name  
+Contact Details for Both Parties  
+Invoice Date  
+Invoice Number  
+Related Purchase Order Number (if available)  
+Payment Method and Currency  
+Invoice Description  
+Payment Amount and Date  
+Based on the payment type, we also provide details that help banks locate 
+payments: 
+Check: Check Number or Check Image (if available)  
+ACH Trace IDs (if available) and Vendor Account Details  
+Bill p a yment methods and timelines
+14
+International Wire: Trace IDs (if available) and Vendor Account Details  
+How to view check images (Pre- and post-deposit)
+If you need proof that a check has been mailed or deposited—for record-keeping, 
+vendor follow-up, or dispute resolution—you can access check images directly 
+from the bill details view.
+Hereʼs how to find them:
+ Go to the Bills tab and click on the relevant bill  
+ Scroll to the "Keep an eye out for this payment" section  
+ Click the down arrow to expand the details  
+ Youʼll see one or both of the following check images, depending on the billʼs 
+status, and you'll have the option to Download check
+Pre-deposit image (Check in the mail)
+This is the check that was mailed out to the vendor  
+Available once the bill status is "Check in the mail"  
+Useful for confirming payment was issued  
+Bill p a yment methods and timelines
+15
+Post-deposit image (Check deposited)
+This is the image from the bank of first deposit, confirming the vendor 
+deposited the check  
+Available once the bill status is "Paid"  
+Useful for verifying the check cleared successfully  
+If you have trouble locating a check image or need assistance with a specific 
+payment, please contact Ramp Support.
+Frequently Asked Questions
+Are there any fees for using Ramp Bill Pay?  
+Bill p a yment methods and timelines
+16
+Standard ACH, card, and check payments are free to use. However, fees apply for 
+certain expedited or specialized payment methods:
+Same-day ACH payments: $10 per transaction  
+Domestic wire transfers: $15 per transaction  
+International wire SWIFT USD payments: $20 per transaction  
+More information about these fees can be found here: Bill Pay fees.
+Why was my payment debited later than the scheduled date?  
+Payments are initiated on the scheduled date, but ACH debits typically clear by 
+the next business day due to NACHA settlement processes. For example, a 
+payment initiated on Feb 2nd may clear by the next business day. Bill Pay syncs to 
+the customer's ERP after the debit clears, ensuring accurate accounting.
+How can a Vendor check the status of a payment?  
+Vendors have the option to create an account in the Ramp Vendor Portal. Once 
+registered, they can log in at any time to view payment statuses, download 
+remittance information, and manage their account details. Vendors can accept 
+faster payments for a 1% fee; faster payment offers are not guaranteed and are 
+completely optional. 
+If a Vendor reaches out asking for proof or status of payment, we recommend 
+directing them to the Vendor Portal. You can share the following article with them 
+to get started: Ramp Vendor Portal: How to create and use your account
+Bill p a yment methods and timelines
+17
