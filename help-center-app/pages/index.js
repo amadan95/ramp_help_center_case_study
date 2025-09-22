@@ -2,7 +2,7 @@ import { useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
 import { useHelpCenterData } from '../src/hooks/useHelpCenterData';
 import { FilterSection } from '../src/components/FilterSection';
-import { ArticleCard } from '../src/components/ArticleCard';
+import { ArticleCard } from '../src/components/ArticleCard.next';
 import { DefinitionTooltip } from '../src/components/DefinitionTooltip';
 import { deriveVotes } from '../src/utils/metadata';
 import { FONT_FAMILY, rampPalette } from '../src/theme.next';
@@ -534,10 +534,91 @@ export default function Home() {
           ))}
         </div>
       </div>
-      
-      {/* Rest of the components will be converted similarly */}
-      {/* This is a simplified version to demonstrate the approach */}
-      
+      {view === 'ops' ? (
+        <div className={styles.metricsRow}>
+          <Metric label="Articles" value={filteredArticleCount} />
+          <Metric label="Sentiment" value={sentimentValue} />
+          <Metric label="Helpful votes" value={helpfulPercent} />
+          <Metric label="Unhelpful votes" value={unhelpfulPercent} />
+        </div>
+      ) : null}
+      {view === 'ai' ? (
+        <div className={styles.metricsRow}>
+          <Metric label="Articles" value={filteredArticleCount} />
+          <Metric label="Usable AI chunks" value={aiUsableChunkCount} />
+          <Metric label="Needs human review" value={aiNeedsReviewCount} />
+        </div>
+      ) : null}
+
+      {view === 'human' && showAudienceControls ? (
+        <div className={styles.panel}>
+          <div className={styles.panelHeader}>
+            <div className={styles.panelTitle}>Filters</div>
+            <div className={styles.panelSubtitle}>Filters power all three modes—adjust to see how content and signals change.</div>
+          </div>
+          <div className={styles.filtersWrapper}>
+            <FilterSection
+              title="Persona"
+              options={personaOptions}
+              selected={personaFilter}
+              onSelect={togglePersona}
+              emptyLabel="No persona metadata yet"
+            />
+            <FilterSection
+              title="Service tier"
+              options={tierOptions}
+              selected={tierFilter}
+              onSelect={toggleTier}
+              emptyLabel="No tier metadata"
+            />
+            <FilterSection
+              title="Product area"
+              options={featureOptions}
+              selected={featureFilter}
+              onSelect={toggleFeature}
+              emptyLabel="No product areas yet"
+            />
+            <FilterSection
+              title="Region"
+              options={regionOptions}
+              selected={regionFilter}
+              onSelect={toggleRegion}
+              emptyLabel="No regions found"
+            />
+            <FilterSection
+              title="Integrations"
+              options={integrationOptions}
+              selected={integrationFilter}
+              onSelect={toggleIntegration}
+              emptyLabel="No integration tags found"
+            />
+          </div>
+        </div>
+      ) : null}
+
+      {view === 'ai' ? (
+        <div className={styles.humanSearchRow}>
+          <input
+            className={styles.humanSearchInput}
+            placeholder={'Search chunks…'}
+            value={searchQuery}
+            onChange={e => setSearchQuery(e.target.value)}
+          />
+          <button className={styles.humanSearchButton} onClick={handleAiSearch}>
+            <span className={styles.humanSearchButtonText}>Search</span>
+          </button>
+          <div className={styles.thresholdWrapper}>
+            <span className={styles.thresholdLabel}>Threshold</span>
+            <input
+              className={styles.thresholdInput}
+              value={String(aiConfidenceThreshold)}
+              onChange={e => setAiConfidenceThreshold(e.target.value.replace(/[^0-9]/g, ''))}
+            />
+            <span className={styles.thresholdSuffix}>%</span>
+          </div>
+        </div>
+      ) : null}
+
       <div className={styles.hero}>
         {view === 'human' ? (
           <>
@@ -578,13 +659,465 @@ export default function Home() {
         </div>
       ) : (
         <div className={styles.viewWrapper}>
-          {/* Content will go here */}
-          <p className={styles.placeholder}>
-            App successfully converted to Next.js for Vercel deployment. 
-            The full component conversion would include converting all React Native components to their web equivalents.
-          </p>
+          {view === 'human' ? renderHumanView(
+            filteredArticles,
+            setSearchQuery,
+            searchQuery,
+            handleSelectCategory,
+            handleGroupsLayout,
+            humanMode,
+            humanResultsTitle,
+            handleBackToLanding,
+            handleSearch,
+            handleViewAll
+          ) : null}
+          {view === 'ai' ? renderAiView(
+            filteredChunks,
+            chunkSort,
+            handleChunkSort,
+            handleAiTableLayout,
+            thresholdDecimal,
+            aiConfidenceThreshold
+          ) : null}
+          {view === 'ops' ? renderOpsView(
+            opsQueues,
+            handleOpenEditor,
+            handleOpenComposer
+          ) : null}
         </div>
       )}
+
+      {editorOpen ? (
+        <>
+          <div className={styles.drawerBackdrop} onClick={() => setEditorOpen(false)} />
+          <div className={styles.drawer}>
+            <div className={styles.drawerHeader}>
+              <div className={styles.drawerTitle}>{isCreating ? 'Write article' : 'Edit article'}</div>
+              <div className={styles.drawerHeaderActions}>
+                <button onClick={() => setEditorOpen(false)} className={styles.drawerActionButton}>
+                  <span className={styles.drawerActionText}>Cancel</span>
+                </button>
+                <button onClick={handleSaveEditor} className={`${styles.drawerActionButton} ${styles.drawerSaveButton}`}>
+                  <span className={`${styles.drawerActionText} ${styles.drawerSaveText}`}>{isCreating ? 'Publish' : 'Save'}</span>
+                </button>
+              </div>
+            </div>
+            <div className={styles.drawerFieldLabel}>Headline</div>
+            <input
+              className={styles.drawerTitleInput}
+              value={editorTitle}
+              onChange={e => setEditorTitle(e.target.value)}
+              placeholder="Add headline"
+            />
+            <div className={styles.drawerFieldLabel}>Body</div>
+            <textarea
+              className={styles.drawerTextInput}
+              value={editorBody}
+              onChange={e => setEditorBody(e.target.value)}
+            />
+            <div className={styles.drawerFiltersRow}>
+              <FilterSection
+                title="Persona"
+                options={personaOptions}
+                selected={editorPersona}
+                onSelect={value => toggleEditorList(setEditorPersona, editorPersona, value)}
+                emptyLabel="No persona metadata"
+              />
+              <FilterSection
+                title="Service tier"
+                options={tierOptions}
+                selected={editorTier}
+                onSelect={value => toggleEditorList(setEditorTier, editorTier, value)}
+                emptyLabel="No tier metadata"
+              />
+              <FilterSection
+                title="Product area"
+                options={featureOptions}
+                selected={editorFeatures}
+                onSelect={value => toggleEditorList(setEditorFeatures, editorFeatures, value)}
+                emptyLabel="No product areas"
+              />
+              <FilterSection
+                title="Region"
+                options={regionOptions}
+                selected={editorRegions}
+                onSelect={value => toggleEditorList(setEditorRegions, editorRegions, value)}
+                emptyLabel="No regions"
+              />
+              <FilterSection
+                title="Integrations"
+                options={integrationOptions}
+                selected={editorIntegrations}
+                onSelect={value => toggleEditorList(setEditorIntegrations, editorIntegrations, value)}
+                emptyLabel="No integration tags"
+              />
+            </div>
+          </div>
+        </>
+      ) : null}
+    </div>
+  );
+}
+
+function renderHumanView(articles, setSearchValue, searchValue, onSelectCategory, onGroupsLayout, mode, resultsTitle, onBackToLanding, onSubmitSearch, onViewAll) {
+  const categories = [
+    { id: 'getting-started', title: 'Getting Started', description: 'Account setup, invites, and your first policies.' },
+    { id: 'cards-controls', title: 'Cards & Controls', description: 'Issue physical & virtual cards, set spend limits.' },
+    { id: 'bill-pay', title: 'Bill Pay & AP', description: 'Onboard vendors, approvals, international payments.' },
+    { id: 'accounting-close', title: 'Accounting & Close', description: 'Automations, rules, and ERP sync to close faster.' },
+    { id: 'reimbursements', title: 'Reimbursements', description: 'Submit, approve, and sync employee expenses.' },
+    { id: 'integrations', title: 'Integrations', description: 'Connect ERPs, HRIS, travel & real-time feeds.' }
+  ];
+  const limitedCategories = categories.slice(0, 6);
+
+  const withViews = articles.filter(a => a?.signals?.views_30d && Number.isFinite(a.signals.views_30d));
+  const popular = (withViews.length ? withViews : articles)
+    .slice()
+    .sort((a, b) => {
+      const aViews = a?.signals?.views_30d || 0;
+      const bViews = b?.signals?.views_30d || 0;
+      if (aViews !== bViews) return bViews - aViews;
+      const aVotes = deriveVotes(a.raw || a);
+      const bVotes = deriveVotes(b.raw || b);
+      return (bVotes.total || 0) - (aVotes.total || 0);
+    })
+    .slice(0, 5);
+
+  const recent = articles
+    .filter(a => a.updated_at || a.last_reviewed)
+    .slice()
+    .sort((a, b) => {
+      const aTime = new Date(a.updated_at || a.last_reviewed || 0).getTime();
+      const bTime = new Date(b.updated_at || b.last_reviewed || 0).getTime();
+      return bTime - aTime;
+    })
+    .slice(0, 5);
+
+  const openArticle = url => {
+    if (url) window.open(url, '_blank');
+  };
+
+  return (
+    <div>
+      <p className={styles.humanHeroSubtitle}>
+        Search and browse guidance tailored to your roles, tier, and integrations. Use AI Assist for
+        complex multi-step workflows.
+      </p>
+      <div className={styles.humanSearchRow}>
+        <input
+          className={styles.humanSearchInput}
+          placeholder="Search by task, feature, or question..."
+          value={searchValue}
+          onChange={e => setSearchValue(e.target.value)}
+        />
+        <button className={styles.humanSearchButton} onClick={onSubmitSearch}>
+          <span className={styles.humanSearchButtonText}>Search</span>
+        </button>
+      </div>
+      <div className={styles.humanTryRow}>
+        <span className={styles.humanTryLabel}>Try:</span>
+        {['Virtual cards', 'Bill Pay approvals', 'Receipt matching', 'Accounting sync'].map(example => (
+          <button key={example} className={styles.humanTryPill} onClick={() => setSearchValue && setSearchValue(example)}>
+            <span className={styles.humanTryPillText}>{example}</span>
+          </button>
+        ))}
+      </div>
+      {mode === 'landing' ? (
+        <div className={styles.humanInfoRow} onLoadCapture={e => onGroupsLayout && onGroupsLayout(e.currentTarget.getBoundingClientRect().top + window.scrollY)}>
+          <div className={styles.humanInfoCard}>
+            <div className={styles.humanInfoTitle}>Popular this week</div>
+            {popular.length ? (
+              <div className={styles.humanList}>
+                {popular.map(item => (
+                  <button key={item.id} onClick={() => openArticle(item.html_url)} className={styles.humanListItem}>
+                    <span className={styles.humanListLink}>{item.title}</span>
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <div className={styles.humanInfoText}>No popularity data available yet.</div>
+            )}
+          </div>
+          <div className={styles.humanInfoCard}>
+            <div className={styles.humanInfoTitle}>Recently updated</div>
+            {recent.length ? (
+              <div className={styles.humanList}>
+                {recent.map(item => {
+                  const updated = item.updated_at || item.last_reviewed || null;
+                  const updatedDisplay = updated
+                    ? new Date(updated).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })
+                    : null;
+                  return (
+                    <button key={item.id} onClick={() => openArticle(item.html_url)} className={styles.humanListItem}>
+                      <span className={styles.humanListLink}>{item.title}</span>
+                      {updatedDisplay ? <span className={styles.humanListMeta}>{updatedDisplay}</span> : null}
+                    </button>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className={styles.humanInfoText}>No recent updates found.</div>
+            )}
+          </div>
+        </div>
+      ) : (
+        <div onLoadCapture={e => onGroupsLayout && onGroupsLayout(e.currentTarget.getBoundingClientRect().top + window.scrollY)}>
+          <div className={styles.humanResultsHeader}>
+            <div className={styles.sectionTitle}>{resultsTitle}</div>
+            <button onClick={onBackToLanding} className={styles.humanBrowseAll}>Back</button>
+          </div>
+          <div className={styles.articleGrid}>
+            {articles
+              .filter(article => {
+                const q = (searchValue || '').trim().toLowerCase();
+                if (!q) return true;
+                const text = `${article.title} ${article.snippet || ''}`.toLowerCase();
+                return text.includes(q);
+              })
+              .slice(0, 24)
+              .map(article => (
+                <ArticleCard key={article.id} article={article} />
+              ))}
+          </div>
+        </div>
+      )}
+
+      <div className={styles.humanBrowseHeader}>
+        <div className={styles.sectionTitle}>Browse by category</div>
+        <button onClick={onViewAll} className={styles.humanBrowseAll}>View all →</button>
+      </div>
+      <div className={styles.humanCategoryGrid}>
+        {limitedCategories.map(cat => (
+          <button
+            key={cat.id}
+            className={styles.humanCategoryCard}
+            onClick={() => onSelectCategory && onSelectCategory(cat.id)}
+          >
+            <div className={styles.humanCategoryTitle}>{cat.title}</div>
+            <div className={styles.humanCategoryDesc}>{cat.description}</div>
+            <div className={styles.humanCategoryCta}>Browse →</div>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function renderAiView(chunks, sortState, onSort, onTableLayout, thresholdDecimal, thresholdPercent) {
+  const renderSortIndicator = column => {
+    if (!sortState || sortState.column !== column) return '';
+    return sortState.direction === 'desc' ? ' ↓' : ' ↑';
+  };
+
+  const handleSort = column => {
+    if (onSort) onSort(column);
+  };
+
+  return (
+    <div>
+      <div className={styles.sectionTitle}>RAG Retrieval Preview</div>
+      <div onLoadCapture={e => onTableLayout && onTableLayout(e.currentTarget.getBoundingClientRect().top + window.scrollY)}>
+        <table className={styles.table}>
+          <thead>
+            <tr className={styles.tableHeader}>
+              <th className={`${styles.tableHeaderCell} ${styles.colChunk}`}>
+                <DefinitionTooltip label="Chunk" description={COLUMN_DEFINITIONS.chunk}>
+                  <button className={styles.tableHeaderPressable} onClick={() => handleSort('chunk')}>
+                    <span className={`${styles.tableHeaderText} ${styles.tableCellCenter}`}>Chunk{renderSortIndicator('chunk')}</span>
+                  </button>
+                </DefinitionTooltip>
+              </th>
+              <th className={`${styles.tableHeaderCell} ${styles.colPersona}`}>
+                <DefinitionTooltip label="Persona & Tier" description={COLUMN_DEFINITIONS.personaTier}>
+                  <button className={styles.tableHeaderPressable} onClick={() => handleSort('persona')}>
+                    <span className={`${styles.tableHeaderText} ${styles.tableCellCenter}`}>Persona / Tier{renderSortIndicator('persona')}</span>
+                  </button>
+                </DefinitionTooltip>
+              </th>
+              <th className={`${styles.tableHeaderCell} ${styles.colSummary}`}>
+                <DefinitionTooltip label="Summary" description={COLUMN_DEFINITIONS.summary}>
+                  <button className={styles.tableHeaderPressable} onClick={() => handleSort('summary')}>
+                    <span className={`${styles.tableHeaderText} ${styles.tableCellCenter}`}>Summary{renderSortIndicator('summary')}</span>
+                  </button>
+                </DefinitionTooltip>
+              </th>
+              <th className={`${styles.tableHeaderCell} ${styles.colUpdated}`}>
+                <DefinitionTooltip label="Last updated" description={COLUMN_DEFINITIONS.updated}>
+                  <button className={styles.tableHeaderPressable} onClick={() => handleSort('updated')}>
+                    <span className={`${styles.tableHeaderText} ${styles.tableCellCenter}`}>Updated{renderSortIndicator('updated')}</span>
+                  </button>
+                </DefinitionTooltip>
+              </th>
+              <th className={`${styles.tableHeaderCell} ${styles.colConfidence}`}>
+                <DefinitionTooltip label={`Confidence (≥${thresholdPercent}% = Approved)`} description={`${COLUMN_DEFINITIONS.confidence} Threshold set to ${thresholdPercent}%.`}>
+                  <button className={styles.tableHeaderPressable} onClick={() => handleSort('confidence')}>
+                    <span className={`${styles.tableHeaderText} ${styles.tableCellCenter}`}>Confidence{renderSortIndicator('confidence')}</span>
+                  </button>
+                </DefinitionTooltip>
+              </th>
+              <th className={`${styles.tableHeaderCell} ${styles.colStatus}`}>
+                <DefinitionTooltip label="AI ready?" description={COLUMN_DEFINITIONS.status}>
+                  <button className={styles.tableHeaderPressable} onClick={() => handleSort('status')}>
+                    <span className={`${styles.tableHeaderText} ${styles.tableCellCenter}`}>AI ready?{renderSortIndicator('status')}</span>
+                  </button>
+                </DefinitionTooltip>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {chunks.length === 0 ? (
+              <tr className={styles.tableEmpty}><td className={styles.emptyState} colSpan={6}>No persona-specific chunks for this combination yet.</td></tr>
+            ) : (
+              chunks.map((chunk, index) => {
+                const voteTotal = typeof chunk.vote_total === 'number' ? chunk.vote_total : null;
+                const positivePercent = typeof chunk.positivity === 'number' && chunk.positivity !== null
+                  ? Math.round(chunk.positivity * 100)
+                  : null;
+                const checks = chunk.approval_checks || {};
+                const needs = [];
+                if (!checks.hasFeedback) needs.push('>=5 votes');
+                if (!checks.positivityOk) needs.push('60%+ positivity');
+                if (!checks.confidenceOk) needs.push('>=60% confidence');
+                if (!checks.isRecentEnough) needs.push('recent review date');
+                if (!checks.isPlusEligible) needs.push('non-Plus content');
+
+                const metaLine = `Votes: ${voteTotal !== null ? voteTotal : '—'} • Positive: ${
+                  positivePercent !== null ? `${positivePercent}%` : '—'
+                }`;
+                const needsLine = !chunk.allowed_for_ai && needs.length ? `Needs: ${needs.join(', ')}` : null;
+                const recencyDays = chunk.confidence_breakdown?.recencyDays;
+                const recencyLine = recencyDays !== null ? `Age: ${recencyDays}d` : null;
+                const updatedDate = chunk.last_reviewed ? new Date(chunk.last_reviewed) : null;
+                const updatedDisplay = updatedDate
+                  ? updatedDate.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })
+                  : '—';
+
+                return (
+                  <tr key={chunk.id} className={index % 2 === 1 ? styles.tableRowAlt : ''}>
+                    <td className={`${styles.tableCell} ${styles.colChunk} ${styles.tableCellStrong}`}>{chunk.title}</td>
+                    <td className={`${styles.tableCell} ${styles.colPersona} ${styles.tableCellMuted}`}>
+                      {(chunk.persona || []).join(', ')}<br/> {(chunk.service_tier || []).join(', ')}
+                    </td>
+                    <td className={`${styles.tableCell} ${styles.colSummary} ${styles.tableCellMuted}`}>{chunk.summary}</td>
+                    <td className={`${styles.tableCell} ${styles.colUpdated} ${styles.tableCellCenter}`}>
+                      {updatedDisplay}
+                    </td>
+                    <td className={`${styles.tableCell} ${styles.colConfidence} ${styles.tableCellCenter}`}>
+                      {Math.round((chunk.confidence || 0) * 100)}%
+                    </td>
+                    <td className={`${styles.tableCell} ${styles.colStatus} ${styles.tableCellCenter}`}>
+                      <span className={(chunk.confidence || 0) >= thresholdDecimal ? styles.statusGood : styles.statusWarn}>
+                        {(chunk.confidence || 0) >= thresholdDecimal ? 'Approved' : 'Human review'}
+                      </span>
+                      <div className={styles.tableCellMeta}>{metaLine}</div>
+                      {recencyLine ? (
+                        <div className={styles.tableCellMeta}>{recencyLine}</div>
+                      ) : null}
+                      {needsLine ? (
+                        <div className={`${styles.tableCellMeta} ${styles.tableCellFail}`}>{needsLine}</div>
+                      ) : null}
+                    </td>
+                  </tr>
+                );
+              })
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+function renderOpsView(queues, onEdit, onCompose) {
+  const renderCard = (item, badgeLabel, accentColor) => {
+    const persona = (item.article.persona && item.article.persona.length ? item.article.persona : ['—']).join(' • ');
+    const tiers = (item.article.service_tier && item.article.service_tier.length ? item.article.service_tier : ['—']).join(' • ');
+    const positivity = item.votes.positivity !== null ? Math.round(item.votes.positivity * 100) : null;
+    const sentimentLabel = positivity === null ? 'No feedback yet' : `${positivity}% positive`;
+    const sentimentWarn = positivity !== null && positivity < 50;
+    const updatedRelativeBase = item.article.updated_at ? formatRelative(item.article.updated_at) : null;
+    const updatedRelative = updatedRelativeBase
+      ? updatedRelativeBase === 'today'
+        ? 'Today'
+        : `${updatedRelativeBase} ago`
+      : 'Recently';
+    const updatedAbsolute = item.article.updated_at
+      ? new Date(item.article.updated_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })
+      : null;
+
+    return (
+      <button
+        key={item.article.id}
+        className={styles.opsCard}
+        style={{ borderLeftColor: accentColor }}
+        onClick={() => item.article.html_url && window.open(item.article.html_url, '_blank')}
+      >
+        <div className={styles.opsCardHeader}>
+          <span className={styles.opsBadge}>{badgeLabel}</span>
+          <div className={styles.opsHeaderRight}>
+            <span className={styles.opsMeta}>{updatedRelative}</span>
+            <button
+              className={styles.opsEditButton}
+              onClick={(e) => {
+                e.stopPropagation();
+                if (onEdit) onEdit(item.article);
+              }}
+            >
+              <span className={styles.opsEditButtonText}>Edit</span>
+            </button>
+          </div>
+        </div>
+        <div className={styles.opsCardTitle}>{item.article.title}</div>
+        <div className={styles.opsTagRow}>
+          <span className={styles.opsTag}>{persona}</span>
+          <span className={styles.opsTag}>{tiers}</span>
+        </div>
+        <div className={styles.opsStatsRow}>
+          <span className={`${styles.opsSentiment} ${sentimentWarn ? styles.opsSentimentWarn : styles.opsSentimentOk}`}>{sentimentLabel}</span>
+          <span className={styles.opsStatsMeta}>Votes {item.votes.total}</span>
+          {updatedAbsolute ? <span className={styles.opsStatsMeta}>{updatedAbsolute}</span> : null}
+        </div>
+        <div className={styles.opsAiTitle}>AI suggestion</div>
+        <div className={styles.opsAiText}>{item.aiInsight}</div>
+      </button>
+    );
+  };
+
+  return (
+    <div>
+      <div className={styles.sectionTitle}>Operator Console</div>
+      <div className={styles.opsToolbar}>
+        <button className={styles.composeButton} onClick={onCompose}>
+          <span className={styles.composeButtonText}>Write new article</span>
+        </button>
+      </div>
+      <div className={styles.opsRow}>
+        <div className={styles.opsColumn}>
+          <div className={styles.opsTitle}>High impact refresh queue</div>
+          {queues.alerts.length === 0 ? (
+            <div className={styles.emptyState}>No alerts yet</div>
+          ) : (
+            queues.alerts.map(item => renderCard(item, 'Refresh alert', '#E4F222'))
+          )}
+        </div>
+        <div className={styles.opsColumn}>
+          <div className={styles.opsTitle}>Stale content</div>
+          {queues.stale.length === 0 ? (
+            <div className={styles.emptyState}>All sampled articles are fresh.</div>
+          ) : (
+            queues.stale.map(item => renderCard(item, 'Stale watch', '#D47A3C'))
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Metric({ label, value }) {
+  return (
+    <div className={styles.metricCard}>
+      <div className={styles.metricLabel}>{String(label).toUpperCase()}</div>
+      <div className={styles.metricValue}>{typeof value === 'number' ? value.toLocaleString() : value}</div>
     </div>
   );
 }
