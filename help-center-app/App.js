@@ -118,6 +118,16 @@ export default function App() {
   const [humanResultsTitle, setHumanResultsTitle] = useState('Results');
   const [showAudienceControls, setShowAudienceControls] = useState(false);
 
+  // Local edit + override state for operator console editor
+  const [articleOverrides, setArticleOverrides] = useState({});
+  const [editorOpen, setEditorOpen] = useState(false);
+  const [editorArticle, setEditorArticle] = useState(null);
+  const [editorBody, setEditorBody] = useState('');
+  const [editorPersona, setEditorPersona] = useState([]);
+  const [editorTier, setEditorTier] = useState([]);
+  const [editorFeatures, setEditorFeatures] = useState([]);
+  const [editorIntegrations, setEditorIntegrations] = useState([]);
+
   const scrollRef = useRef(null);
   const groupsTopYRef = useRef(null);
   const CATEGORY_TO_AREA = {
@@ -129,9 +139,14 @@ export default function App() {
     'integrations': 'integrations'
   };
 
+  const effectiveArticles = useMemo(
+    () => articles.map(a => (articleOverrides[a.id] ? { ...a, ...articleOverrides[a.id] } : a)),
+    [articles, articleOverrides]
+  );
+
   const personaOptions = useMemo(() => {
     const seen = new Set();
-    articles.forEach(article => {
+    effectiveArticles.forEach(article => {
       (article.persona || []).forEach(p => seen.add(p));
     });
     return Array.from(seen)
@@ -141,11 +156,11 @@ export default function App() {
         label: capitalise(value),
         definition: PERSONA_DEFINITIONS[value] || `Audience segment tagged as ${capitalise(value)}.`
       }));
-  }, [articles]);
+  }, [effectiveArticles]);
 
   const tierOptions = useMemo(() => {
     const seen = new Set();
-    articles.forEach(article => {
+    effectiveArticles.forEach(article => {
       (article.service_tier || []).forEach(t => seen.add(t));
     });
     return Array.from(seen)
@@ -155,11 +170,11 @@ export default function App() {
         label: capitalise(value),
         definition: TIER_DEFINITIONS[value] || `Service tier marker: ${capitalise(value)}.`
       }));
-  }, [articles]);
+  }, [effectiveArticles]);
 
   const featureOptions = useMemo(() => {
     const seen = new Set();
-    articles.forEach(article => {
+    effectiveArticles.forEach(article => {
       (article.feature_area || []).forEach(area => seen.add(area));
     });
     return Array.from(seen)
@@ -176,11 +191,11 @@ export default function App() {
           definition: `Feature area: ${label}`
         };
       });
-  }, [articles]);
+  }, [effectiveArticles]);
 
   const integrationOptions = useMemo(() => {
     const seen = new Set();
-    articles.forEach(article => {
+    effectiveArticles.forEach(article => {
       (article.integrations || []).forEach(i => seen.add(i));
     });
     return Array.from(seen)
@@ -190,12 +205,12 @@ export default function App() {
         label: formatIntegration(value),
         definition: INTEGRATION_DEFINITIONS[value] || `Integration tag: ${formatIntegration(value)}.`
       }));
-  }, [articles]);
+  }, [effectiveArticles]);
 
   const regionOptions = useMemo(() => {
     let hasDomestic = false;
     let hasInternational = false;
-    articles.forEach(article => {
+    effectiveArticles.forEach(article => {
       const regions = article.regions || [];
       if (regions.includes('us')) hasDomestic = true;
       if (regions.some(r => r !== 'us')) hasInternational = true;
@@ -204,7 +219,7 @@ export default function App() {
     if (hasDomestic) opts.push({ value: 'domestic', label: 'Domestic (US)', definition: 'Articles applicable to US region.' });
     if (hasInternational) opts.push({ value: 'international', label: 'International', definition: 'Articles that reference non‑US behavior or global scope.' });
     return opts;
-  }, [articles]);
+  }, [effectiveArticles]);
 
   const togglePersona = value => {
     setPersonaFilter(current => (current.includes(value) ? current.filter(item => item !== value) : [...current, value]));
@@ -241,9 +256,9 @@ export default function App() {
   };
 
   const filteredArticles = useMemo(() => {
-    if (!articles.length) return [];
+    if (!effectiveArticles.length) return [];
 
-    return articles
+    return effectiveArticles
       .filter(article => {
         const personaMatch =
           !personaFilter.length || (article.persona || []).some(persona => personaFilter.includes(persona));
@@ -264,7 +279,7 @@ export default function App() {
         return personaMatch && tierMatch && integrationMatch && featureMatch && regionMatch && textMatch;
       })
       .sort((a, b) => scoreArticle(b) - scoreArticle(a));
-  }, [articles, personaFilter, tierFilter, integrationFilter, featureFilter, regionFilter, searchQuery]);
+  }, [effectiveArticles, personaFilter, tierFilter, integrationFilter, featureFilter, regionFilter, searchQuery]);
 
   const filteredChunks = useMemo(() => {
     if (!chunks.length) return [];
@@ -379,6 +394,39 @@ export default function App() {
   const handleBackToLanding = () => {
     setHumanMode('landing');
     setShowAudienceControls(false);
+  };
+
+  // Operator console editor handlers
+  const handleOpenEditor = article => {
+    const source = articleOverrides[article.id] ? { ...article, ...articleOverrides[article.id] } : article;
+    setEditorArticle(article);
+    setEditorBody(source.raw?.body || source.body || '');
+    setEditorPersona(Array.isArray(source.persona) ? source.persona : []);
+    setEditorTier(Array.isArray(source.service_tier) ? source.service_tier : []);
+    setEditorFeatures(Array.isArray(source.feature_area) ? source.feature_area : []);
+    setEditorIntegrations(Array.isArray(source.integrations) ? source.integrations : []);
+    setEditorOpen(true);
+  };
+
+  const toggleEditorList = (setter, current, value) => {
+    const exists = current.includes(value);
+    const next = exists ? current.filter(v => v !== value) : [...current, value];
+    setter(next);
+  };
+
+  const handleSaveEditor = () => {
+    if (!editorArticle) return;
+    setArticleOverrides(prev => ({
+      ...prev,
+      [editorArticle.id]: {
+        body: editorBody,
+        persona: editorPersona,
+        service_tier: editorTier,
+        feature_area: editorFeatures,
+        integrations: editorIntegrations
+      }
+    }));
+    setEditorOpen(false);
   };
 
   return (
@@ -528,8 +576,63 @@ export default function App() {
               handleViewAll
             ) : null}
             {view === 'ai' ? renderAiView(filteredChunks, chunkSort, handleChunkSort) : null}
-            {view === 'ops' ? renderOpsView(opsQueues) : null}
+            {view === 'ops' ? renderOpsView(opsQueues, handleOpenEditor) : null}
           </View>
+        ) : null}
+        {editorOpen ? (
+          <>
+            <Pressable style={styles.drawerBackdrop} onPress={() => setEditorOpen(false)} />
+            <View style={styles.drawer}>
+              <View style={styles.drawerHeader}>
+                <Text style={styles.drawerTitle}>Edit article</Text>
+                <View style={styles.drawerHeaderActions}>
+                  <Pressable onPress={() => setEditorOpen(false)} style={styles.drawerActionButton}>
+                    <Text style={styles.drawerActionText}>Cancel</Text>
+                  </Pressable>
+                  <Pressable onPress={handleSaveEditor} style={[styles.drawerActionButton, styles.drawerSaveButton]}>
+                    <Text style={[styles.drawerActionText, styles.drawerSaveText]}>Save</Text>
+                  </Pressable>
+                </View>
+              </View>
+              <Text style={styles.drawerFieldLabel}>Body</Text>
+              <TextInput
+                multiline
+                style={styles.drawerTextInput}
+                value={editorBody}
+                onChangeText={setEditorBody}
+              />
+              <View style={styles.drawerFiltersRow}>
+                <FilterSection
+                  title="Persona"
+                  options={personaOptions}
+                  selected={editorPersona}
+                  onSelect={value => toggleEditorList(setEditorPersona, editorPersona, value)}
+                  emptyLabel="No persona metadata"
+                />
+                <FilterSection
+                  title="Service tier"
+                  options={tierOptions}
+                  selected={editorTier}
+                  onSelect={value => toggleEditorList(setEditorTier, editorTier, value)}
+                  emptyLabel="No tier metadata"
+                />
+                <FilterSection
+                  title="Product area"
+                  options={featureOptions}
+                  selected={editorFeatures}
+                  onSelect={value => toggleEditorList(setEditorFeatures, editorFeatures, value)}
+                  emptyLabel="No product areas"
+                />
+                <FilterSection
+                  title="Integrations"
+                  options={integrationOptions}
+                  selected={editorIntegrations}
+                  onSelect={value => toggleEditorList(setEditorIntegrations, editorIntegrations, value)}
+                  emptyLabel="No integration tags"
+                />
+              </View>
+            </View>
+          </>
         ) : null}
       </ScrollView>
     </SafeAreaView>
@@ -869,7 +972,7 @@ ${needsLine}`}</Text>
   );
 }
 
-function renderOpsView(queues) {
+function renderOpsView(queues, onEdit) {
   const renderCard = (item, badgeLabel, accentColor) => {
     const persona = (item.article.persona && item.article.persona.length ? item.article.persona : ['—']).join(' • ');
     const tiers = (item.article.service_tier && item.article.service_tier.length ? item.article.service_tier : ['—']).join(' • ');
@@ -894,7 +997,18 @@ function renderOpsView(queues) {
       >
         <View style={styles.opsCardHeader}>
           <Text style={styles.opsBadge}>{badgeLabel}</Text>
-          <Text style={styles.opsMeta}>{updatedRelative}</Text>
+          <View style={styles.opsHeaderRight}>
+            <Text style={styles.opsMeta}>{updatedRelative}</Text>
+            <Pressable
+              style={styles.opsEditButton}
+              onPress={(e) => {
+                e?.stopPropagation?.();
+                if (onEdit) onEdit(item.article);
+              }}
+            >
+              <Text style={styles.opsEditButtonText}>Edit</Text>
+            </Pressable>
+          </View>
         </View>
         <Text style={styles.opsCardTitle}>{item.article.title}</Text>
         <View style={styles.opsTagRow}>
@@ -1682,6 +1796,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 12
   },
+  opsHeaderRight: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  opsEditButton: {
+    marginLeft: 10,
+    backgroundColor: rampPalette.accentSecondary,
+    borderRadius: 999,
+    paddingVertical: 6,
+    paddingHorizontal: 12
+  },
+  opsEditButtonText: {
+    color: rampPalette.accentPrimary,
+    fontWeight: '700',
+    fontFamily: FONT_FAMILY
+  },
   opsBadge: {
     fontSize: 12,
     letterSpacing: 1,
@@ -1768,5 +1898,84 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     color: rampPalette.text,
     fontFamily: FONT_FAMILY
+  },
+  drawerBackdrop: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0,0,0,0.25)'
+  },
+  drawer: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    width: 420,
+    bottom: 0,
+    backgroundColor: rampPalette.surface,
+    borderLeftWidth: 1,
+    borderLeftColor: rampPalette.border,
+    paddingHorizontal: 20,
+    paddingTop: 18
+  },
+  drawerHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 12
+  },
+  drawerTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: rampPalette.accentPrimary,
+    fontFamily: FONT_FAMILY
+  },
+  drawerHeaderActions: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  drawerActionButton: {
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: rampPalette.border,
+    marginLeft: 8
+  },
+  drawerSaveButton: {
+    backgroundColor: rampPalette.accentSecondary,
+    borderColor: rampPalette.accentSecondary
+  },
+  drawerActionText: {
+    color: rampPalette.accentPrimary,
+    fontWeight: '600',
+    fontFamily: FONT_FAMILY
+  },
+  drawerSaveText: {
+    fontWeight: '700'
+  },
+  drawerFieldLabel: {
+    fontSize: 12,
+    letterSpacing: 1,
+    color: rampPalette.muted,
+    fontWeight: '700',
+    marginBottom: 8,
+    fontFamily: FONT_FAMILY
+  },
+  drawerTextInput: {
+    minHeight: 180,
+    borderWidth: 1,
+    borderColor: rampPalette.border,
+    borderRadius: 10,
+    padding: 12,
+    textAlignVertical: 'top',
+    marginBottom: 16,
+    backgroundColor: rampPalette.surface,
+    fontFamily: FONT_FAMILY
+  },
+  drawerFiltersRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap'
   }
 });
