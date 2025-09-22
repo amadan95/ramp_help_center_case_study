@@ -3,6 +3,7 @@
     "name": "Ramp Context Hub",
     "slug": "ramp-context-hub",
     "version": "1.0.0",
+    "router": { "origin": "legacy" },
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
