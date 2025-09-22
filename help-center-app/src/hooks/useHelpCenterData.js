@@ -24,7 +24,8 @@ export function useHelpCenterData({ articlePages = 6 } = {}) {
         const articlesData = await articlesRes.json();
         const chunksData = await chunksRes.json();
         
-        setArticles(articlesData.slice(0, articlePages * 10) || []);
+        // Load all available articles (remove demo pagination cap)
+        setArticles(Array.isArray(articlesData) ? articlesData : []);
         setChunks(chunksData || []);
         setFetchedAt(new Date());
         setError(null);
