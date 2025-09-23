@@ -20,7 +20,12 @@ function getFromLocalStorage(key) {
   return '';
 }
 
-const keyFromEnv = getEnv('EXPO_PUBLIC_GEMINI_API_KEY');
+// IMPORTANT: Use a direct property access so bundlers inline the value at build time
+// on Vercel/Expo Web exports. Dynamic index access (process.env[key]) will NOT be inlined.
+// This line will be replaced with the literal value at build time if the env var exists.
+const INLINE_ENV_GEMINI = process.env.EXPO_PUBLIC_GEMINI_API_KEY;
+
+const keyFromEnv = INLINE_ENV_GEMINI || getEnv('EXPO_PUBLIC_GEMINI_API_KEY');
 const keyFromGlobal = (typeof globalThis !== 'undefined' && (globalThis.GEMINI_API_KEY || globalThis.__GEMINI_API_KEY__)) || '';
 const keyFromStorage = getFromLocalStorage('GEMINI_API_KEY');
 
@@ -32,6 +37,16 @@ export function setGeminiApiKeyRuntime(value) {
       localStorage.setItem('GEMINI_API_KEY', value || '');
     }
   } catch (_) {}
+}
+
+export function debugGeminiKeyPresence() {
+  const masked = (GEMINI_API_KEY && typeof GEMINI_API_KEY === 'string')
+    ? `${GEMINI_API_KEY.slice(0, 6)}…(${GEMINI_API_KEY.length})`
+    : '(empty)';
+  const directPresent = Boolean(INLINE_ENV_GEMINI);
+  const storagePresent = Boolean(getFromLocalStorage('GEMINI_API_KEY'));
+  // Do not log the full key—only masked details
+  try { console.log('[GeminiKey]', { directPresent, storagePresent, masked }); } catch (_) {}
 }
 
 

@@ -19,7 +19,7 @@ import { DefinitionTooltip } from './src/components/DefinitionTooltip';
 import { deriveVotes } from './src/utils/metadata';
 import { FONT_FAMILY, rampPalette } from './src/theme';
 import { generateAiAnswer } from './src/utils/ai';
-import { GEMINI_API_KEY } from './src/utils/config';
+import { GEMINI_API_KEY, debugGeminiKeyPresence } from './src/utils/config';
 import Markdown from 'react-native-markdown-display';
 
 const VIEW_TABS = [
@@ -1067,6 +1067,8 @@ function AiAssistPanel({ query, articles, shouldGenerate }) {
   const feedbackKeyRef = useRef('');
 
   useEffect(() => {
+    // On first render, log masked key presence to help debug env wiring in prod
+    try { debugGeminiKeyPresence(); } catch (_) {}
     const q = (query || '').trim();
     if (!shouldGenerate || !q) return;
     const visible = Array.isArray(articles) ? articles.slice(0, 60) : [];
