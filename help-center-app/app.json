@@ -3,9 +3,6 @@
     "name": "Ramp Context Hub",
     "slug": "ramp-context-hub",
     "version": "1.0.0",
-    "owner": "alokmadan",
-    "projectId": "269b9a42-64df-4a78-828b-e742acf4e042",
-    "router": { "origin": "legacy" },
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -26,14 +23,7 @@
       "edgeToEdgeEnabled": true
     },
     "web": {
-      "favicon": "./assets/favicon.png",
-      "bundler": "metro",
-      "output": "static"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "269b9a42-64df-4a78-828b-e742acf4e042"
-      }
+      "favicon": "./assets/favicon.png"
     }
   }
 }

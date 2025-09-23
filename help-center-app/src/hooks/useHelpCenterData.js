@@ -1,96 +1,177 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import usageRecords from '../../data/usage.json';
+import { buildChunk, deriveVotes, mapArticle } from '../utils/metadata';
 
-export function useHelpCenterData({ articlePages = 6 } = {}) {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [articles, setArticles] = useState([]);
-  const [chunks, setChunks] = useState([]);
-  const [fetchedAt, setFetchedAt] = useState(null);
+function normaliseTitle(value) {
+  return value.toLowerCase().replace(/\s+/g, ' ').trim();
+}
+
+function createPlaceholderArticle(record) {
+  const totalVotes = record.upvotes + record.downvotes;
+  const voteSum = record.upvotes - record.downvotes;
+  const searchUrl = `https://support.ramp.com/hc/en-us/search?query=${encodeURIComponent(record.title)}`;
+
+  return {
+    id: `usage-${record.rank}`,
+    title: record.title,
+    persona: ['admin'],
+    service_tier: ['base'],
+    feature_area: ['usage-insights'],
+    topic_cluster: 'Usage insights',
+    content_type: 'reference',
+    journey_stage: 'discover',
+    integrations: [],
+    regions: ['us'],
+    product_variants: ['base'],
+    is_plus_only: false,
+    last_reviewed: null,
+    owner_team: 'Help Center',
+    feedback_channels: [],
+    snippet: 'Usage data available; article content not yet ingested in this prototype. Follow the link to view the full article.',
+    html_url: searchUrl,
+    source_url: searchUrl,
+    vote_count: totalVotes,
+    vote_sum: voteSum,
+    signals: {
+      vote_total: totalVotes,
+      vote_sum: voteSum,
+      views_30d: record.views,
+      usage_upvotes: record.upvotes,
+      usage_downvotes: record.downvotes
+    },
+    isPlaceholder: true
+  };
+}
+
+const BASE_URL = 'https://support.ramp.com/api/v2/help_center/en-us';
+
+async function fetchJson(url) {
+  const response = await fetch(url);
+  if (!response.ok) {
+    const message = await response.text();
+    throw new Error(`Request failed: ${response.status} ${response.statusText} - ${message}`);
+  }
+  return response.json();
+}
+
+async function fetchPaginated(path, key, { perPage = 100, maxPages = 5 } = {}) {
+  let page = 1;
+  let nextUrl = `${BASE_URL}/${path}.json?per_page=${perPage}&page=${page}`;
+  const results = [];
+
+  while (nextUrl && page <= maxPages) {
+    const data = await fetchJson(nextUrl);
+    const pageItems = data[key] || [];
+    results.push(...pageItems);
+    nextUrl = data.next_page;
+    page += 1;
+  }
+
+  return results;
+}
+
+export function useHelpCenterData({ articlePages = 2 } = {}) {
+  const [state, setState] = useState({
+    loading: true,
+    error: null,
+    articles: [],
+    chunks: [],
+    stats: { totalVotes: 0, positiveArticles: 0, helpfulVotes: 0, unhelpfulVotes: 0 },
+    fetchedAt: null
+  });
 
   useEffect(() => {
-    async function fetchData() {
+    let cancelled = false;
+
+    async function load() {
+      setState(prev => ({ ...prev, loading: true, error: null }));
       try {
-        setLoading(true);
-        
-        // In a real app, this would fetch from an API
-        // For this demo, we'll use static JSON files
-        const articlesRes = await fetch('/data/articles.json');
-        const chunksRes = await fetch('/data/chunks.json');
-        const usageRes = await fetch('/data/usage.json');
-        
-        if (!articlesRes.ok || !chunksRes.ok || !usageRes.ok) {
-          throw new Error('Failed to load data');
-        }
-        
-        const articlesData = await articlesRes.json();
-        const chunksData = await chunksRes.json();
-        const usageData = await usageRes.json();
-        
-        // Load all available articles (remove demo pagination cap) and merge usage-only items as placeholders
-        const baseArticles = Array.isArray(articlesData) ? articlesData.slice() : [];
-        const titleToArticle = new Map(
-          baseArticles
-            .filter(a => a && typeof a.title === 'string')
-            .map(a => [a.title.trim().toLowerCase(), a])
+        const [categories, sections, articles] = await Promise.all([
+          fetchPaginated('categories', 'categories', { perPage: 100, maxPages: 1 }),
+          fetchPaginated('sections', 'sections', { perPage: 100, maxPages: 5 }),
+          fetchPaginated('articles', 'articles', { perPage: 100, maxPages: articlePages })
+        ]);
+
+        if (cancelled) return;
+
+        const sectionMap = new Map(sections.map(section => [section.id, section]));
+        const categoryMap = new Map(categories.map(category => [category.id, category]));
+
+        const usageMap = new Map(usageRecords.map(record => [normaliseTitle(record.title), { record, matched: false }]));
+
+        const mappedArticles = articles.map(article => {
+          const section = sectionMap.get(article.section_id) || null;
+          const category = section ? categoryMap.get(section.category_id) : null;
+          const mapped = mapArticle(article, section, category);
+          const key = normaliseTitle(mapped.title);
+          const usageEntry = usageMap.get(key);
+          if (usageEntry) {
+            usageEntry.matched = true;
+            const { record } = usageEntry;
+            const totalVotes = record.upvotes + record.downvotes;
+            const voteSum = record.upvotes - record.downvotes;
+            mapped.vote_count = totalVotes;
+            mapped.vote_sum = voteSum;
+            mapped.signals = {
+              ...(mapped.signals || {}),
+              vote_total: totalVotes,
+              vote_sum: voteSum,
+              views_30d: record.views,
+              usage_upvotes: record.upvotes,
+              usage_downvotes: record.downvotes
+            };
+            mapped.usage = record;
+          }
+          return mapped;
+        });
+
+        const placeholderArticles = [];
+        usageMap.forEach(({ record, matched }) => {
+          if (!matched) {
+            placeholderArticles.push(createPlaceholderArticle(record));
+          }
+        });
+
+        const allArticles = [...mappedArticles, ...placeholderArticles];
+
+        const chunks = allArticles.map(buildChunk).filter(Boolean);
+
+        const stats = allArticles.reduce(
+          (acc, article) => {
+            const votes = deriveVotes(article.raw || article);
+            acc.totalVotes += votes.total;
+            acc.helpfulVotes += votes.upvotes;
+            acc.unhelpfulVotes += votes.downvotes;
+            if (votes.positivity !== null && votes.positivity >= 0.5) {
+              acc.positiveArticles += 1;
+            }
+            return acc;
+          },
+          { totalVotes: 0, positiveArticles: 0, helpfulVotes: 0, unhelpfulVotes: 0 }
         );
 
-        const placeholders = Array.isArray(usageData)
-          ? usageData
-              .filter(u => u && typeof u.title === 'string' && !titleToArticle.has(u.title.trim().toLowerCase()))
-              .map(u => {
-                const title = u.title.trim();
-                const id = title
-                  .toLowerCase()
-                  .replace(/[^a-z0-9]+/g, '-')
-                  .replace(/(^-|-$)/g, '')
-                  .slice(0, 80);
-                const voteTotal = (Number(u.upvotes || 0) + Number(u.downvotes || 0)) | 0;
-                const voteSum = (Number(u.upvotes || 0) - Number(u.downvotes || 0)) | 0;
-                return {
-                  id: `usage-${id || Date.now()}`,
-                  title,
-                  source_url: null,
-                  persona: [],
-                  service_tier: ['base'],
-                  feature_area: [],
-                  topic_cluster: 'General',
-                  content_type: 'guide',
-                  journey_stage: 'operate',
-                  integrations: [],
-                  regions: ['us'],
-                  product_variants: [],
-                  is_plus_only: false,
-                  updated_at: new Date().toISOString(),
-                  owner_team: 'Help Center',
-                  feedback_channels: ['article_vote'],
-                  snippet: '',
-                  signals: {
-                    views_30d: Number(u.views || 0),
-                    vote_total: voteTotal,
-                    vote_sum: voteSum
-                  },
-                  vote_count: voteTotal,
-                  vote_sum: voteSum,
-                  html_url: `https://support.ramp.com/hc/en-us/search?query=${encodeURIComponent(title)}`,
-                  isPlaceholder: true
-                };
-              })
-          : [];
-
-        setArticles([...baseArticles, ...placeholders]);
-        setChunks(chunksData || []);
-        setFetchedAt(new Date());
-        setError(null);
-      } catch (err) {
-        console.error('Error fetching help center data:', err);
-        setError(err);
-      } finally {
-        setLoading(false);
+        setState({
+          loading: false,
+          error: null,
+          articles: allArticles,
+          chunks,
+          stats,
+          fetchedAt: new Date()
+        });
+      } catch (error) {
+        if (cancelled) return;
+        console.error('Failed to load help center data', error);
+        setState(prev => ({ ...prev, loading: false, error }));
       }
     }
 
-    fetchData();
+    load();
+
+    return () => {
+      cancelled = true;
+    };
   }, [articlePages]);
 
-  return { loading, error, articles, chunks, fetchedAt };
+  const value = useMemo(() => state, [state]);
+  return value;
 }

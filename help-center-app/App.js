@@ -25,9 +25,6 @@ const VIEW_TABS = [
   { id: 'ai', label: 'AI retrieval' }
 ];
 
-// Config: default AI confidence threshold percentage for approval
-const DEFAULT_AI_CONFIDENCE_THRESHOLD = 60;
-
 const KEYWORD_HINTS = [
   {
     keywords: ['login', 'password', 'sso', 'mfa'],
@@ -86,9 +83,7 @@ const METRIC_DEFINITIONS = {
   Articles: 'Count of help center entries that match the current persona, tier, and integration filters.',
   Sentiment: 'Share of matching articles with majority-positive votes, indicating current experience quality.',
   'Helpful votes': 'Percentage of helpful votes across the filtered article set.',
-  'Unhelpful votes': 'Percentage of unhelpful votes across the filtered article set.',
-  'Usable AI chunks': 'Count of filtered chunks where allowed_for_ai is true.',
-  'Needs human review': 'Count of filtered chunks not AI-approved (allowed_for_ai is false).'
+  'Unhelpful votes': 'Percentage of unhelpful votes across the filtered article set.'
 };
 
 const COLUMN_DEFINITIONS = {
@@ -122,25 +117,19 @@ export default function App() {
   const [humanMode, setHumanMode] = useState('landing');
   const [humanResultsTitle, setHumanResultsTitle] = useState('Results');
   const [showAudienceControls, setShowAudienceControls] = useState(false);
-  const [aiConfidenceThreshold, setAiConfidenceThreshold] = useState(DEFAULT_AI_CONFIDENCE_THRESHOLD);
-  const [createdArticles, setCreatedArticles] = useState([]);
-  const [isCreating, setIsCreating] = useState(false);
 
   // Local edit + override state for operator console editor
   const [articleOverrides, setArticleOverrides] = useState({});
   const [editorOpen, setEditorOpen] = useState(false);
   const [editorArticle, setEditorArticle] = useState(null);
-  const [editorTitle, setEditorTitle] = useState('');
   const [editorBody, setEditorBody] = useState('');
   const [editorPersona, setEditorPersona] = useState([]);
   const [editorTier, setEditorTier] = useState([]);
   const [editorFeatures, setEditorFeatures] = useState([]);
   const [editorIntegrations, setEditorIntegrations] = useState([]);
-  const [editorRegions, setEditorRegions] = useState([]);
 
   const scrollRef = useRef(null);
   const groupsTopYRef = useRef(null);
-  const aiTopYRef = useRef(null);
   const CATEGORY_TO_AREA = {
     'getting-started': 'authentication',
     'cards-controls': 'cards',
@@ -150,10 +139,10 @@ export default function App() {
     'integrations': 'integrations'
   };
 
-  const effectiveArticles = useMemo(() => {
-    const merged = articles.map(a => (articleOverrides[a.id] ? { ...a, ...articleOverrides[a.id] } : a));
-    return [...createdArticles, ...merged];
-  }, [articles, articleOverrides, createdArticles]);
+  const effectiveArticles = useMemo(
+    () => articles.map(a => (articleOverrides[a.id] ? { ...a, ...articleOverrides[a.id] } : a)),
+    [articles, articleOverrides]
+  );
 
   const personaOptions = useMemo(() => {
     const seen = new Set();
@@ -339,10 +328,6 @@ export default function App() {
     });
   }, [chunks, personaFilter, tierFilter, integrationFilter, featureFilter, regionFilter, searchQuery, chunkSort]);
 
-  const thresholdDecimal = Math.max(0, Math.min(100, Number(aiConfidenceThreshold || 0))) / 100;
-  const aiUsableChunkCount = useMemo(() => filteredChunks.filter(c => (c.confidence || 0) >= thresholdDecimal).length, [filteredChunks, thresholdDecimal]);
-  const aiNeedsReviewCount = useMemo(() => filteredChunks.filter(c => (c.confidence || 0) < thresholdDecimal).length, [filteredChunks, thresholdDecimal]);
-
   const opsQueues = useMemo(() => buildOpsQueues(filteredArticles), [filteredArticles]);
 
   const filteredStats = useMemo(() => aggregateArticleStats(filteredArticles), [filteredArticles]);
@@ -411,51 +396,15 @@ export default function App() {
     setShowAudienceControls(false);
   };
 
-  const handleAiTableLayout = y => {
-    aiTopYRef.current = y;
-  };
-
-  const handleAiSearch = () => {
-    setChunkSort({ column: 'confidence', direction: 'desc' });
-    if (scrollRef.current && aiTopYRef.current !== null && aiTopYRef.current !== undefined) {
-      try {
-        scrollRef.current.scrollTo({ y: Math.max(0, aiTopYRef.current - 12), animated: true });
-      } catch (e) {}
-    }
-  };
-
   // Operator console editor handlers
   const handleOpenEditor = article => {
     const source = articleOverrides[article.id] ? { ...article, ...articleOverrides[article.id] } : article;
     setEditorArticle(article);
-    setIsCreating(false);
-    setEditorTitle(source.title || '');
     setEditorBody(source.raw?.body || source.body || '');
     setEditorPersona(Array.isArray(source.persona) ? source.persona : []);
     setEditorTier(Array.isArray(source.service_tier) ? source.service_tier : []);
     setEditorFeatures(Array.isArray(source.feature_area) ? source.feature_area : []);
     setEditorIntegrations(Array.isArray(source.integrations) ? source.integrations : []);
-    const toTags = (regionsArr=[]) => {
-      const tags = [];
-      if (regionsArr.includes('us')) tags.push('domestic');
-      if (regionsArr.some(r => r !== 'us')) tags.push('international');
-      return tags;
-    };
-    setEditorRegions(toTags(source.regions));
-    setEditorOpen(true);
-  };
-
-  const handleOpenComposer = () => {
-    const newId = `local-${Date.now()}`;
-    setEditorArticle({ id: newId });
-    setIsCreating(true);
-    setEditorTitle('');
-    setEditorBody('');
-    setEditorPersona([]);
-    setEditorTier(['base']);
-    setEditorFeatures([]);
-    setEditorIntegrations([]);
-    setEditorRegions(['domestic']);
     setEditorOpen(true);
   };
 
@@ -467,55 +416,14 @@ export default function App() {
 
   const handleSaveEditor = () => {
     if (!editorArticle) return;
-    const fromTags = (tags=[]) => {
-      const regions = [];
-      if (tags.includes('domestic')) regions.push('us');
-      if (tags.includes('international')) regions.push('global');
-      return regions.length ? regions : ['us'];
-    };
-
-    if (isCreating) {
-      const now = new Date().toISOString();
-      const text = (editorBody || '').replace(/<[^>]+>/g, ' ');
-      const snippet = text ? (text.slice(0, 280) + (text.length > 280 ? '…' : '')) : '';
-      const newArticle = {
-        id: editorArticle.id,
-        title: editorTitle || 'Untitled',
-        body: editorBody,
-        snippet,
-        persona: editorPersona,
-        service_tier: editorTier,
-        feature_area: editorFeatures,
-        integrations: editorIntegrations,
-        regions: fromTags(editorRegions),
-        updated_at: now,
-        topic_cluster: 'General',
-        content_type: 'guide',
-        journey_stage: 'operate',
-        is_plus_only: editorTier.length === 1 && editorTier[0] === 'plus',
-        owner_team: 'Help Center',
-        vote_count: 0,
-        vote_sum: 0,
-        signals: { vote_total: 0, vote_sum: 0 },
-        html_url: '#'
-      };
-      setCreatedArticles(prev => [newArticle, ...prev]);
-      setIsCreating(false);
-      setEditorOpen(false);
-      return;
-    }
-
-    // Update override for existing article
     setArticleOverrides(prev => ({
       ...prev,
       [editorArticle.id]: {
-        title: editorTitle,
         body: editorBody,
         persona: editorPersona,
         service_tier: editorTier,
         feature_area: editorFeatures,
-        integrations: editorIntegrations,
-        regions: fromTags(editorRegions)
+        integrations: editorIntegrations
       }
     }));
     setEditorOpen(false);
@@ -571,19 +479,12 @@ export default function App() {
           </View>
         )}
 
-      {view === 'ops' ? (
+      {view !== 'human' ? (
         <View style={styles.metricsRow}>
           <Metric label="Articles" value={filteredArticleCount} definition={METRIC_DEFINITIONS.Articles} />
           <Metric label="Sentiment" value={sentimentValue} definition={METRIC_DEFINITIONS.Sentiment} />
           <Metric label="Helpful votes" value={helpfulPercent} definition={METRIC_DEFINITIONS['Helpful votes']} />
           <Metric label="Unhelpful votes" value={unhelpfulPercent} definition={METRIC_DEFINITIONS['Unhelpful votes']} />
-        </View>
-      ) : null}
-      {view === 'ai' ? (
-        <View style={styles.metricsRow}>
-          <Metric label="Articles" value={filteredArticleCount} definition={METRIC_DEFINITIONS.Articles} />
-          <Metric label="Usable AI chunks" value={aiUsableChunkCount} definition={METRIC_DEFINITIONS['Usable AI chunks']} />
-          <Metric label="Needs human review" value={aiNeedsReviewCount} definition={METRIC_DEFINITIONS['Needs human review']} />
         </View>
       ) : null}
 
@@ -634,26 +535,13 @@ export default function App() {
         ) : null}
 
         {view === 'ai' ? (
-          <View style={styles.humanSearchRow}>
+          <View style={styles.searchRow}>
             <TextInput
-              style={styles.humanSearchInput}
-              placeholder={'Search chunks…'}
+              style={styles.searchInput}
+              placeholder={view === 'human' ? 'Search articles…' : 'Search chunks…'}
               value={searchQuery}
               onChangeText={setSearchQuery}
             />
-            <Pressable style={styles.humanSearchButton} onPress={handleAiSearch}>
-              <Text style={styles.humanSearchButtonText}>Search</Text>
-            </Pressable>
-            <View style={styles.thresholdWrapper}>
-              <Text style={styles.thresholdLabel}>Threshold</Text>
-              <TextInput
-                style={styles.thresholdInput}
-                value={String(aiConfidenceThreshold)}
-                onChangeText={v => setAiConfidenceThreshold(v.replace(/[^0-9]/g, ''))}
-                keyboardType="numeric"
-              />
-              <Text style={styles.thresholdSuffix}>%</Text>
-            </View>
           </View>
         ) : null}
 
@@ -687,8 +575,8 @@ export default function App() {
               handleSearch,
               handleViewAll
             ) : null}
-            {view === 'ai' ? renderAiView(filteredChunks, chunkSort, handleChunkSort, handleAiTableLayout, thresholdDecimal, aiConfidenceThreshold) : null}
-            {view === 'ops' ? renderOpsView(opsQueues, handleOpenEditor, handleOpenComposer) : null}
+            {view === 'ai' ? renderAiView(filteredChunks, chunkSort, handleChunkSort) : null}
+            {view === 'ops' ? renderOpsView(opsQueues, handleOpenEditor) : null}
           </View>
         ) : null}
         {editorOpen ? (
@@ -696,23 +584,16 @@ export default function App() {
             <Pressable style={styles.drawerBackdrop} onPress={() => setEditorOpen(false)} />
             <View style={styles.drawer}>
               <View style={styles.drawerHeader}>
-                <Text style={styles.drawerTitle}>{isCreating ? 'Write article' : 'Edit article'}</Text>
+                <Text style={styles.drawerTitle}>Edit article</Text>
                 <View style={styles.drawerHeaderActions}>
                   <Pressable onPress={() => setEditorOpen(false)} style={styles.drawerActionButton}>
                     <Text style={styles.drawerActionText}>Cancel</Text>
                   </Pressable>
                   <Pressable onPress={handleSaveEditor} style={[styles.drawerActionButton, styles.drawerSaveButton]}>
-                    <Text style={[styles.drawerActionText, styles.drawerSaveText]}>{isCreating ? 'Publish' : 'Save'}</Text>
+                    <Text style={[styles.drawerActionText, styles.drawerSaveText]}>Save</Text>
                   </Pressable>
                 </View>
               </View>
-              <Text style={styles.drawerFieldLabel}>Headline</Text>
-              <TextInput
-                style={styles.drawerTitleInput}
-                value={editorTitle}
-                onChangeText={setEditorTitle}
-                placeholder="Add headline"
-              />
               <Text style={styles.drawerFieldLabel}>Body</Text>
               <TextInput
                 multiline
@@ -741,13 +622,6 @@ export default function App() {
                   selected={editorFeatures}
                   onSelect={value => toggleEditorList(setEditorFeatures, editorFeatures, value)}
                   emptyLabel="No product areas"
-                />
-                <FilterSection
-                  title="Region"
-                  options={regionOptions}
-                  selected={editorRegions}
-                  onSelect={value => toggleEditorList(setEditorRegions, editorRegions, value)}
-                  emptyLabel="No regions"
                 />
                 <FilterSection
                   title="Integrations"
@@ -939,7 +813,7 @@ function FeatureGroupSection({ area, items }) {
   );
 }
 
-function renderAiView(chunks, sortState, onSort, onTableLayout, thresholdDecimal, thresholdPercent) {
+function renderAiView(chunks, sortState, onSort) {
   const renderSortIndicator = column => {
     if (!sortState || sortState.column !== column) return '';
     return sortState.direction === 'desc' ? ' ↓' : ' ↑';
@@ -952,7 +826,7 @@ function renderAiView(chunks, sortState, onSort, onTableLayout, thresholdDecimal
   return (
     <View>
       <Text style={styles.sectionTitle}>RAG Retrieval Preview</Text>
-      <View style={styles.table} onLayout={e => onTableLayout && onTableLayout(e.nativeEvent.layout.y)}>
+      <View style={styles.table}>
         <View style={[styles.tableRow, styles.tableHeader]}>
           <DefinitionTooltip
             style={[styles.tableHeaderCell, styles.colChunk]}
@@ -1000,8 +874,8 @@ function renderAiView(chunks, sortState, onSort, onTableLayout, thresholdDecimal
           </DefinitionTooltip>
           <DefinitionTooltip
             style={[styles.tableHeaderCell, styles.colConfidence]}
-            label={`Confidence (≥${thresholdPercent}% = Approved)`}
-            description={`${COLUMN_DEFINITIONS.confidence} Threshold set to ${thresholdPercent}%.`}
+            label="Confidence"
+            description={COLUMN_DEFINITIONS.confidence}
           >
             <Pressable onPress={() => handleSort('confidence')} style={styles.tableHeaderPressable}>
               <Text style={[styles.tableHeaderText, styles.tableCellCenter]}>
@@ -1035,7 +909,7 @@ function renderAiView(chunks, sortState, onSort, onTableLayout, thresholdDecimal
             const needs = [];
             if (!checks.hasFeedback) needs.push('>=5 votes');
             if (!checks.positivityOk) needs.push('60%+ positivity');
-            if (!checks.confidenceOk) needs.push('>=60% confidence');
+            if (!checks.confidenceOk) needs.push('>=65% confidence');
             if (!checks.isRecentEnough) needs.push('recent review date');
             if (!checks.isPlusEligible) needs.push('non-Plus content');
 
@@ -1075,8 +949,8 @@ function renderAiView(chunks, sortState, onSort, onTableLayout, thresholdDecimal
                   {Math.round((chunk.confidence || 0) * 100)}%
                 </Text>
                 <Text style={[styles.tableCell, styles.colStatus, styles.tableCellCenter]}>
-                  <Text style={(chunk.confidence || 0) >= thresholdDecimal ? styles.statusGood : styles.statusWarn}>
-                    {(chunk.confidence || 0) >= thresholdDecimal ? 'Approved' : 'Human review'}
+                  <Text style={chunk.allowed_for_ai ? styles.statusGood : styles.statusWarn}>
+                    {chunk.allowed_for_ai ? 'Approved' : 'Human review'}
                   </Text>
                   <Text style={styles.tableCellMeta}>{`
 ${metaLine}`}</Text>
@@ -1098,7 +972,7 @@ ${needsLine}`}</Text>
   );
 }
 
-function renderOpsView(queues, onEdit, onCompose) {
+function renderOpsView(queues, onEdit) {
   const renderCard = (item, badgeLabel, accentColor) => {
     const persona = (item.article.persona && item.article.persona.length ? item.article.persona : ['—']).join(' • ');
     const tiers = (item.article.service_tier && item.article.service_tier.length ? item.article.service_tier : ['—']).join(' • ');
@@ -1155,11 +1029,6 @@ function renderOpsView(queues, onEdit, onCompose) {
   return (
     <View>
       <Text style={styles.sectionTitle}>Operator Console</Text>
-      <View style={styles.opsToolbar}>
-        <Pressable style={styles.composeButton} onPress={onCompose}>
-          <Text style={styles.composeButtonText}>Write new article</Text>
-        </Pressable>
-      </View>
       <View style={styles.opsRow}>
         <View style={styles.opsColumn}>
           <Text style={styles.opsTitle}>High impact refresh queue</Text>
@@ -1572,35 +1441,6 @@ const styles = StyleSheet.create({
   tabTextActive: {
     color: rampPalette.accentPrimary
   },
-  thresholdWrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginLeft: 10,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: rampPalette.border,
-    backgroundColor: rampPalette.surface,
-    paddingHorizontal: 10,
-    height: 40
-  },
-  thresholdLabel: {
-    color: rampPalette.muted,
-    marginRight: 6,
-    fontFamily: FONT_FAMILY
-  },
-  thresholdInput: {
-    minWidth: 40,
-    paddingVertical: 6,
-    paddingHorizontal: 6,
-    textAlign: 'center',
-    fontFamily: FONT_FAMILY,
-    color: rampPalette.text
-  },
-  thresholdSuffix: {
-    color: rampPalette.muted,
-    marginLeft: 2,
-    fontFamily: FONT_FAMILY
-  },
 
   searchRow: {
     marginBottom: 16
@@ -1935,25 +1775,6 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     fontFamily: FONT_FAMILY
   },
-  opsToolbar: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    marginBottom: 12
-  },
-  composeButton: {
-    backgroundColor: rampPalette.accentSecondary,
-    paddingHorizontal: 14,
-    paddingVertical: 10,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: rampPalette.accentSecondary
-  },
-  composeButtonText: {
-    color: rampPalette.accentPrimary,
-    fontWeight: '700',
-    fontFamily: FONT_FAMILY
-  },
   opsCard: {
     backgroundColor: rampPalette.surface,
     borderRadius: 20,
@@ -2084,8 +1905,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(0,0,0,0.25)',
-    zIndex: 1000
+    backgroundColor: 'rgba(0,0,0,0.25)'
   },
   drawer: {
     position: 'absolute',
@@ -2097,8 +1917,7 @@ const styles = StyleSheet.create({
     borderLeftWidth: 1,
     borderLeftColor: rampPalette.border,
     paddingHorizontal: 20,
-    paddingTop: 18,
-    zIndex: 1001
+    paddingTop: 18
   },
   drawerHeader: {
     flexDirection: 'row',
@@ -2142,15 +1961,6 @@ const styles = StyleSheet.create({
     color: rampPalette.muted,
     fontWeight: '700',
     marginBottom: 8,
-    fontFamily: FONT_FAMILY
-  },
-  drawerTitleInput: {
-    borderWidth: 1,
-    borderColor: rampPalette.border,
-    borderRadius: 10,
-    padding: 10,
-    marginBottom: 12,
-    backgroundColor: rampPalette.surface,
     fontFamily: FONT_FAMILY
   },
   drawerTextInput: {
