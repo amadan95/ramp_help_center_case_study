@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ActivityIndicator,
   Linking,
@@ -18,6 +18,9 @@ import { ArticleCard } from './src/components/ArticleCard';
 import { DefinitionTooltip } from './src/components/DefinitionTooltip';
 import { deriveVotes } from './src/utils/metadata';
 import { FONT_FAMILY, rampPalette } from './src/theme';
+import { generateAiAnswer } from './src/utils/ai';
+import { GEMINI_API_KEY } from './src/utils/config';
+import Markdown from 'react-native-markdown-display';
 
 const VIEW_TABS = [
   { id: 'human', label: 'Human experience' },
@@ -640,6 +643,8 @@ export default function App() {
 }
 
 function renderHumanView(articles, setSearchValue, searchValue, onSelectCategory, onGroupsLayout, mode, resultsTitle, onBackToLanding, onSubmitSearch, onViewAll) {
+  const isSearching = Boolean((searchValue || '').trim());
+  const effectiveResultsTitle = isSearching ? `Search: ${searchValue}` : resultsTitle;
   const categories = [
     { id: 'getting-started', title: 'Getting Started', description: 'Account setup, invites, and your first policies.' },
     { id: 'cards-controls', title: 'Cards & Controls', description: 'Issue physical & virtual cards, set spend limits.' },
@@ -705,7 +710,7 @@ function renderHumanView(articles, setSearchValue, searchValue, onSelectCategory
           </Pressable>
         ))}
       </View>
-      {mode === 'landing' ? (
+      {(mode === 'landing' && !isSearching) ? (
         <View style={styles.humanInfoRow} onLayout={e => onGroupsLayout && onGroupsLayout(e.nativeEvent.layout.y)}>
           <View style={styles.humanInfoCard}>
             <Text style={styles.humanInfoTitle}>Popular this week</Text>
@@ -746,9 +751,10 @@ function renderHumanView(articles, setSearchValue, searchValue, onSelectCategory
       ) : (
         <View onLayout={e => onGroupsLayout && onGroupsLayout(e.nativeEvent.layout.y)}>
           <View style={styles.humanResultsHeader}>
-            <Text style={styles.sectionTitle}>{resultsTitle}</Text>
+            <Text style={styles.sectionTitle}>{effectiveResultsTitle}</Text>
             <Pressable onPress={onBackToLanding}><Text style={styles.humanBrowseAll}>Back</Text></Pressable>
           </View>
+          <AiAssistPanel query={searchValue} articles={articles} shouldGenerate={Boolean((searchValue||'').trim())} />
           <View style={styles.articleGrid}>
             {articles
               .filter(article => {
@@ -1051,6 +1057,118 @@ function renderOpsView(queues, onEdit) {
   );
 }
 
+function AiAssistPanel({ query, articles, shouldGenerate }) {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [answer, setAnswer] = useState('');
+  const [sources, setSources] = useState([]);
+  const lastRunRef = useRef({ q: '', count: 0 });
+  const [feedback, setFeedback] = useState(null); // 'up' | 'down' | null
+  const feedbackKeyRef = useRef('');
+
+  useEffect(() => {
+    const q = (query || '').trim();
+    if (!shouldGenerate || !q) return;
+    const visible = Array.isArray(articles) ? articles.slice(0, 60) : [];
+    const matched = visible.filter(a => {
+      if (!a) return false;
+      const hay = `${a.title} ${(a.snippet || '')}`.toLowerCase();
+      return hay.includes(q.toLowerCase());
+    });
+    const key = `${q}|${matched.length}`;
+    if (lastRunRef.current.q === key) return;
+    lastRunRef.current = { q: key, count: matched.length };
+    setLoading(true);
+    setError(null);
+    setAnswer('');
+    generateAiAnswer({
+      apiKey: GEMINI_API_KEY,
+      query: q,
+      articles: matched.slice(0, 12)
+    })
+      .then(({ answer: text, sources: src }) => {
+        setAnswer(text);
+        setSources(src || []);
+      })
+      .catch(e => setError(e))
+      .finally(() => setLoading(false));
+  }, [query, articles, shouldGenerate]);
+
+  // Load/save feedback in local storage keyed by query
+  useEffect(() => {
+    const q = (query || '').trim().toLowerCase();
+    const key = q ? `aiFeedback:${q}` : '';
+    feedbackKeyRef.current = key;
+    if (!key) {
+      setFeedback(null);
+      return;
+    }
+    try {
+      const saved = globalThis?.localStorage?.getItem(key);
+      if (saved === 'up' || saved === 'down') setFeedback(saved);
+      else setFeedback(null);
+    } catch (e) {
+      // ignore persistence errors
+    }
+  }, [query, answer]);
+
+  const submitFeedback = value => {
+    setFeedback(value);
+    try {
+      if (feedbackKeyRef.current) globalThis?.localStorage?.setItem(feedbackKeyRef.current, value);
+    } catch (e) {}
+    try {
+      console.log('AI_FEEDBACK', { query, value, sources });
+    } catch (e) {}
+  };
+
+  return (
+    <View style={styles.aiPanel}>
+      <View style={styles.aiHeaderRow}>
+        <Text style={styles.aiTitle}>AI Assist</Text>
+        {loading ? <Text style={styles.aiHintText}>Generating…</Text> : null}
+      </View>
+      {error ? <Text style={styles.aiErrorText}>{String(error.message || error)}</Text> : null}
+      {answer ? (
+        <View style={styles.aiAnswerBox}>
+          <Markdown style={{ body: styles.aiAnswerText }}>
+            {answer}
+          </Markdown>
+          {sources?.length ? (
+            <View style={styles.aiSources}>
+              <Text style={styles.aiSourcesLabel}>Sources</Text>
+              {sources.map(src => (
+                <Pressable key={src.index + src.url} onPress={() => src.url && Linking.openURL(src.url)}>
+                  <Text numberOfLines={1} style={styles.aiSourceLink}>[{src.index}] {src.title}</Text>
+                </Pressable>
+              ))}
+            </View>
+          ) : null}
+          <View style={styles.aiFeedbackRow}>
+            <Text style={styles.aiFeedbackLabel}>Was this helpful?</Text>
+            <Pressable
+              onPress={() => submitFeedback('up')}
+              style={[styles.aiFeedbackButton, feedback === 'up' && styles.aiFeedbackButtonSelected, feedback === 'up' && styles.aiFeedbackButtonUp]}
+            >
+              <Text style={styles.aiFeedbackButtonText}>👍</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => submitFeedback('down')}
+              style={[styles.aiFeedbackButton, feedback === 'down' && styles.aiFeedbackButtonSelected, feedback === 'down' && styles.aiFeedbackButtonDown]}
+            >
+              <Text style={styles.aiFeedbackButtonText}>👎</Text>
+            </Pressable>
+            {feedback ? (
+              <Text style={styles.aiFeedbackThanks}>{feedback === 'up' ? ' Thanks!' : " We'll improve."}</Text>
+            ) : null}
+          </View>
+        </View>
+      ) : (
+        <Text style={styles.aiHintText}>Type a query and press Search to see an AI summary.</Text>
+      )}
+    </View>
+  );
+}
 
 function scoreArticle(article) {
   const votes = deriveVotes(article.raw || article);
@@ -1977,5 +2095,103 @@ const styles = StyleSheet.create({
   drawerFiltersRow: {
     flexDirection: 'row',
     flexWrap: 'wrap'
+  },
+  aiPanel: {
+    borderWidth: 1,
+    borderColor: rampPalette.border,
+    backgroundColor: '#FAFBFE',
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 20
+  },
+  aiHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 10
+  },
+  aiTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: rampPalette.accentSecondary,
+    fontFamily: FONT_FAMILY
+  },
+  aiAskButton: {
+    backgroundColor: rampPalette.accentPrimary,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 10
+  },
+  aiAskButtonDisabled: {
+    opacity: 0.6
+  },
+  aiAskButtonText: {
+    color: 'white',
+    fontWeight: '600',
+    fontFamily: FONT_FAMILY
+  },
+  aiAnswerBox: {
+    borderTopWidth: 1,
+    borderTopColor: rampPalette.border,
+    paddingTop: 10
+  },
+  aiAnswerText: {
+    color: '#000000',
+    marginBottom: 10,
+    fontFamily: FONT_FAMILY
+  },
+  aiSources: {
+    marginTop: 8
+  },
+  aiSourcesLabel: {
+    fontWeight: '700',
+    marginBottom: 4,
+    fontFamily: FONT_FAMILY
+  },
+  aiSourceLink: {
+    color: rampPalette.accentPrimary,
+    marginBottom: 2,
+    fontFamily: FONT_FAMILY
+  },
+  aiErrorText: {
+    color: rampPalette.danger,
+    fontFamily: FONT_FAMILY
+  },
+  aiHintText: {
+    color: rampPalette.muted,
+    fontFamily: FONT_FAMILY
+  },
+  aiFeedbackRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginTop: 10
+  },
+  aiFeedbackLabel: {
+    color: rampPalette.accentTertiary,
+    marginRight: 8,
+    fontFamily: FONT_FAMILY
+  },
+  aiFeedbackButton: {
+    borderWidth: 1,
+    borderColor: rampPalette.border,
+    borderRadius: 10,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    backgroundColor: '#FFFFFF'
+  },
+  aiFeedbackButtonSelected: {
+    borderColor: rampPalette.accentPrimary,
+    backgroundColor: '#F1F6FF'
+  },
+  aiFeedbackButtonUp: {},
+  aiFeedbackButtonDown: {},
+  aiFeedbackButtonText: {
+    fontSize: 16
+  },
+  aiFeedbackThanks: {
+    marginLeft: 8,
+    color: rampPalette.accentTertiary,
+    fontFamily: FONT_FAMILY
   }
 });

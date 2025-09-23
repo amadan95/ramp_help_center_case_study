@@ -9,6 +9,10 @@
 **/*.zip
 **/dist/**
 **/build/**
+**/.env*
+help-center-app/.env*
+help-center-app/.env.local
+help-center-app/.env.development.local
 
 # Logs
 **/*.log
