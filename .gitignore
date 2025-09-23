@@ -9,6 +9,7 @@
 **/*.zip
 **/dist/**
 **/build/**
+**/.next/**
 **/.env*
 help-center-app/.env*
 help-center-app/.env.local

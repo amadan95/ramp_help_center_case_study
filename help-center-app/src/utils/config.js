@@ -20,8 +20,7 @@ function getFromLocalStorage(key) {
   return '';
 }
 
-// Prefer direct property access so bundlers inline at build time on Vercel
-const keyFromEnv = (typeof process !== 'undefined' && process.env && process.env.EXPO_PUBLIC_GEMINI_API_KEY) || getEnv('EXPO_PUBLIC_GEMINI_API_KEY');
+const keyFromEnv = getEnv('EXPO_PUBLIC_GEMINI_API_KEY');
 const keyFromGlobal = (typeof globalThis !== 'undefined' && (globalThis.GEMINI_API_KEY || globalThis.__GEMINI_API_KEY__)) || '';
 const keyFromStorage = getFromLocalStorage('GEMINI_API_KEY');
 
