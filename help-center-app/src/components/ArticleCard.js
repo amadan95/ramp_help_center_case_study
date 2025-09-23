@@ -3,7 +3,7 @@ import { Linking, Pressable, StyleSheet, Text, View } from 'react-native';
 import { deriveVotes } from '../utils/metadata';
 import { FONT_FAMILY, rampPalette } from '../theme';
 
-export const ArticleCard = memo(function ArticleCard({ article }) {
+export const ArticleCard = memo(function ArticleCard({ article, showSentiment = true }) {
   const votes = deriveVotes(article.raw || article);
   const sentimentLabel = votes.positivity === null ? 'No feedback yet' : `${Math.round(votes.positivity * 100)}% positive`;
   const sentimentTone = votes.positivity !== null && votes.positivity < 0.4 ? styles.sentimentWarn : styles.sentimentOk;
@@ -42,7 +42,9 @@ export const ArticleCard = memo(function ArticleCard({ article }) {
   </View>
 
       <View style={styles.footer}>
-        <Text style={[styles.sentiment, sentimentTone]}>{sentimentLabel}</Text>
+        {showSentiment ? (
+          <Text style={[styles.sentiment, sentimentTone]}>{sentimentLabel}</Text>
+        ) : null}
         <Text style={styles.meta}>{isPlaceholder ? 'Usage snapshot' : `Updated ${formatRelative(article.updated_at)} ago`}</Text>
         <Text style={styles.meta}>{votes.total} votes</Text>
       </View>
