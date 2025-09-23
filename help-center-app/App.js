@@ -397,6 +397,7 @@ export default function App() {
   const handleBackToLanding = () => {
     setHumanMode('landing');
     setShowAudienceControls(false);
+    setSearchQuery('');
   };
 
   // Operator console editor handlers
@@ -1139,8 +1140,8 @@ function AiAssistPanel({ query, articles, shouldGenerate }) {
           {sources?.length ? (
             <View style={styles.aiSources}>
               <Text style={styles.aiSourcesLabel}>Sources</Text>
-              {sources.map(src => (
-                <Pressable key={src.index + src.url} onPress={() => src.url && Linking.openURL(src.url)}>
+              {(sources || []).filter(src => !!src.url).map(src => (
+                <Pressable key={src.index + src.url} onPress={() => Linking.openURL(src.url)} accessibilityRole="link">
                   <Text numberOfLines={1} style={styles.aiSourceLink}>[{src.index}] {src.title}</Text>
                 </Pressable>
               ))}
@@ -2115,7 +2116,7 @@ const styles = StyleSheet.create({
   aiTitle: {
     fontSize: 16,
     fontWeight: '700',
-    color: rampPalette.accentSecondary,
+    color: '#000000',
     fontFamily: FONT_FAMILY
   },
   aiAskButton: {
