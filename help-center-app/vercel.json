@@ -1,7 +1,11 @@
 {
   "buildCommand": "npx expo export --platform web --output-dir dist",
   "outputDirectory": "dist",
+  "cleanUrls": true,
+  "trailingSlash": false,
   "routes": [
+    { "src": "/(assets/.*)", "dest": "/$1" },
+    { "src": "/(.*\\.(?:js|css|map|png|jpg|jpeg|gif|svg|webp|ico|json|txt|woff|woff2))", "dest": "/$1" },
     { "src": "/.*", "dest": "/index.html" }
   ]
 }
