@@ -766,7 +766,7 @@ function renderHumanView(articles, setSearchValue, searchValue, onSelectCategory
               })
               .slice(0, 24)
               .map(article => (
-                <ArticleCard key={article.id} article={article} showSentiment={false} />
+                <ArticleCard key={article.id} article={article} showSentiment={false} showVotes={false} enableFeedback />
               ))}
           </View>
         </View>
@@ -811,7 +811,7 @@ function FeatureGroupSection({ area, items }) {
         <View style={styles.groupContent}>
           <View style={styles.articleGrid}>
             {items.map(article => (
-              <ArticleCard key={article.id} article={article} showSentiment={false} />
+              <ArticleCard key={article.id} article={article} showSentiment={false} showVotes={false} enableFeedback />
             ))}
           </View>
         </View>

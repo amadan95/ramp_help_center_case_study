@@ -1,14 +1,41 @@
-import { memo } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import { Linking, Pressable, StyleSheet, Text, View } from 'react-native';
 import { deriveVotes } from '../utils/metadata';
 import { FONT_FAMILY, rampPalette } from '../theme';
 
-export const ArticleCard = memo(function ArticleCard({ article, showSentiment = true }) {
+export const ArticleCard = memo(function ArticleCard({ article, showSentiment = true, showVotes = true, enableFeedback = false }) {
   const votes = deriveVotes(article.raw || article);
   const sentimentLabel = votes.positivity === null ? 'No feedback yet' : `${Math.round(votes.positivity * 100)}% positive`;
   const sentimentTone = votes.positivity !== null && votes.positivity < 0.4 ? styles.sentimentWarn : styles.sentimentOk;
   const isPlaceholder = !!article.isPlaceholder;
   const views = typeof article.signals?.views_30d === 'number' ? article.signals.views_30d : null;
+  const [thumbFeedback, setThumbFeedback] = useState(null);
+  const feedbackKeyRef = useRef('');
+
+  useEffect(() => {
+    const keyBase = article?.id || article?.html_url || article?.source_url || '';
+    const key = keyBase ? `articleFeedback:${keyBase}` : '';
+    feedbackKeyRef.current = key;
+    if (!key) {
+      setThumbFeedback(null);
+      return;
+    }
+    try {
+      const saved = globalThis?.localStorage?.getItem(key);
+      if (saved === 'up' || saved === 'down') setThumbFeedback(saved);
+      else setThumbFeedback(null);
+    } catch (e) {}
+  }, [article?.id, article?.html_url, article?.source_url]);
+
+  const submitThumbFeedback = value => {
+    setThumbFeedback(value);
+    try {
+      if (feedbackKeyRef.current) globalThis?.localStorage?.setItem(feedbackKeyRef.current, value);
+    } catch (e) {}
+    try {
+      console.log('ARTICLE_FEEDBACK', { id: article?.id, value });
+    } catch (e) {}
+  };
 
   const handleOpen = () => {
     const url = article.html_url || article.source_url || 'https://support.ramp.com';
@@ -46,7 +73,28 @@ export const ArticleCard = memo(function ArticleCard({ article, showSentiment = 
           <Text style={[styles.sentiment, sentimentTone]}>{sentimentLabel}</Text>
         ) : null}
         <Text style={styles.meta}>{isPlaceholder ? 'Usage snapshot' : `Updated ${formatRelative(article.updated_at)} ago`}</Text>
-        <Text style={styles.meta}>{votes.total} votes</Text>
+        {showVotes ? (
+          <Text style={styles.meta}>{votes.total} votes</Text>
+        ) : enableFeedback ? (
+          <View style={styles.feedbackRow}>
+            <Pressable
+              onPress={() => submitThumbFeedback('up')}
+              style={[styles.feedbackButton, thumbFeedback === 'up' && styles.feedbackButtonSelected]}
+              accessibilityRole="button"
+              accessibilityLabel="Mark helpful"
+            >
+              <Text style={styles.feedbackThumb}>👍</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => submitThumbFeedback('down')}
+              style={[styles.feedbackButton, thumbFeedback === 'down' && styles.feedbackButtonSelected]}
+              accessibilityRole="button"
+              accessibilityLabel="Mark not helpful"
+            >
+              <Text style={styles.feedbackThumb}>👎</Text>
+            </Pressable>
+          </View>
+        ) : null}
       </View>
     </Pressable>
   );
@@ -158,6 +206,26 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginTop: 18
+  },
+  feedbackRow: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  feedbackButton: {
+    borderWidth: 1,
+    borderColor: rampPalette.border,
+    borderRadius: 10,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    backgroundColor: '#FFFFFF',
+    marginLeft: 8
+  },
+  feedbackButtonSelected: {
+    borderColor: rampPalette.accentPrimary,
+    backgroundColor: '#F1F6FF'
+  },
+  feedbackThumb: {
+    fontSize: 14
   },
   sentiment: {
     fontSize: 12,
